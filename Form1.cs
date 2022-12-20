@@ -2759,7 +2759,7 @@ namespace GestionAffaire
                 txtNumAff.Text = txtTotalFraisNote.Text = "";
             }
         }
-        private void btnAjouterFrais_Click(object sender, EventArgs e)
+        private void label57_Click(object sender, EventArgs e)
         {
             errorProvider1.Dispose();
 
@@ -3479,7 +3479,7 @@ namespace GestionAffaire
             else
                 errorProvider1.SetError(cmbNumeroMission, "chisir Numero de Mission");
         }
-        private void button2_Click_3(object sender, EventArgs e)
+        private void label52_Click(object sender, EventArgs e)
         {
             errorProvider1.Dispose();
 
@@ -3496,7 +3496,7 @@ namespace GestionAffaire
                 }
 
                 if (exsiste)
-                    errorProvider1.SetError(button2, "ce Personne est déjà Existe dans cette Ordre de Mission");
+                    errorProvider1.SetError(label52, "ce Personne est déjà Existe dans cette Ordre de Mission");
                 else
                 {
                     listeEmployeOrdre.Items.Add(cmbEmployeOrdre.Text);
@@ -3506,7 +3506,13 @@ namespace GestionAffaire
             else
                 errorProvider1.SetError(cmbEmployeOrdre, "Sélectionnez le Personne");
         }
+        private void button2_Click_3(object sender, EventArgs e){}
         private void button5_Click_1(object sender, EventArgs e)
+        {
+            listeEmployeOrdre.Items.Clear();
+            remplirNomEmploye();
+        }
+        private void label55_Click(object sender, EventArgs e)
         {
             listeEmployeOrdre.Items.Clear();
             remplirNomEmploye();
@@ -4059,6 +4065,7 @@ namespace GestionAffaire
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e){}
         private void checkBox2_CheckedChanged_1(object sender, EventArgs e){}
         private void btnSupprimerDisposition_Click(object sender, EventArgs e){}
+        private void btnAjouterFrais_Click(object sender, EventArgs e){}
 
         
     }
