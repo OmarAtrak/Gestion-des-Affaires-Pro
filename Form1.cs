@@ -2644,25 +2644,18 @@ namespace GestionAffaire
                         da.SelectCommand = cmd;
                         da.Fill(ds, "Frais");
 
-                        cmd.Parameters.Clear();
+                        //cmd.Parameters.Clear();
 
-                        if (ds.Tables["NoteFrais"].Rows[0][4].ToString() == "")
-                        {
-                            cmd.CommandText = "select * from Personnel where cin='" + ds.Tables["NoteFrais"].Rows[0][5].ToString() + "'";
-                            da.SelectCommand = cmd;
-                            da.Fill(ds, "Personnel");
-                        }
-                        
+                        //cmd.CommandText = "select * from Personnel where cin='" + ds.Tables["NoteFrais"].Rows[0][5].ToString() + "'";
+                        //da.SelectCommand = cmd;
+                        //da.Fill(ds, "Personnel");
                         con.Close();
 
                         CrystalReport2 cr = new CrystalReport2();
                         cr.Database.Tables["NoteFrais"].SetDataSource(ds.Tables[0]);
                         cr.Database.Tables["Frais"].SetDataSource(ds.Tables[1]);
+                        //cr.Database.Tables["Personnel"].SetDataSource(ds.Tables[2]);
 
-                        if (ds.Tables["NoteFrais"].Rows[0][4].ToString() == "")
-                        {
-                            cr.Database.Tables["Personnel"].SetDataSource(ds.Tables[2]);
-                        }
 
                         Form3 f = new Form3();
                         f.crystalReportViewer1.ReportSource = null;
