@@ -1478,14 +1478,15 @@ namespace GestionAffaire
                             {
                                 if (txtBanque.Text != "")
                                 {
-                                    if (txtAgenceBanque.Text.Contains("'"))
-                                    {
-                                        txtAgenceBanque.Text.Replace("'", "''");
-                                    }
+                                    //if (txtAgenceBanque.Text.Contains("'"))
+                                    //{
+                                    //    txtAgenceBanque.Text.Replace("'", "''");
+                                    //}
                                     if (IsBanqueExists(txtBanque.Text))
                                     {
                                         con.Open();
-                                        cmd.CommandText = "insert into Compte values('" + txtNumeroCompte.Text + "','" + txtAgenceBanque.Text + "','" + txtBanque + "',1)";
+                                        string aganceBanque = txtAgenceBanque.Text;
+                                        cmd.CommandText = "insert into Compte values('" + txtNumeroCompte.Text + "','" + aganceBanque + "','" + txtBanque + "',1)";
                                         cmd.ExecuteNonQuery();
                                         con.Close();
 
@@ -1496,7 +1497,8 @@ namespace GestionAffaire
                                         cmd.CommandText = "insert into Banque values('" + txtBanque.Text + "')";
                                         cmd.ExecuteNonQuery();
                                         cmd.Parameters.Clear();
-                                        cmd.CommandText = "insert into Compte values('" + txtNumeroCompte.Text + "','" + txtAgenceBanque.Text + "','" + txtBanque.Text + "',1)";
+                                        string aganceBanque = txtAgenceBanque.Text.ToString();
+                                        cmd.CommandText = "insert into Compte values('" + txtNumeroCompte.Text + "','" + aganceBanque + "','" + txtBanque.Text + "',1)";
                                         cmd.ExecuteNonQuery();
                                         con.Close();
 
@@ -1867,7 +1869,7 @@ namespace GestionAffaire
                         cmd.CommandText = "update Responsable set active=1 where nom='" + ListRespo.Rows[e.RowIndex].Cells[0].Value + "'";
                         cmd.ExecuteNonQuery();
                     }
-                    else
+                    else if (Convert.ToBoolean(ListRespo.Rows[e.RowIndex].Cells[2].Value) == true)
                     {
                         cmd.CommandText = "update Responsable set active=0 where nom='" + ListRespo.Rows[e.RowIndex].Cells[0].Value + "'";
                         cmd.ExecuteNonQuery();
