@@ -102,14 +102,8 @@ namespace GestionAffaire
             BoxAff.Visible = false;
             BoxNoteAjouter.Visible = false;
         }
-        private void rechercheDansLesFraisToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-        private void rechercherToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
+        private void rechercheDansLesFraisToolStripMenuItem_Click(object sender, EventArgs e){}
+        private void rechercherToolStripMenuItem_Click(object sender, EventArgs e){}
         private void miseAToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BoxDisposition.Visible = true;
@@ -168,13 +162,13 @@ namespace GestionAffaire
 
             if (etatNote == true)
             {
-                panel1.Height += 70;
+                panel1.Height += 52;
                 etatNote = false;
                 btnNote.Image = Properties.Resources.icons8_collapse_arrow_25;
             }
             else
             {
-                panel1.Height -= 70;
+                panel1.Height -= 52;
                 etatNote = true;
                 btnNote.Image = Properties.Resources.icons8_expand_arrow_25;
             }
@@ -1334,9 +1328,7 @@ namespace GestionAffaire
                     if (txtRaisonSocialClient.Text != "")
                     {
                         if (IsClientExists(txtICEClient.Text) == true)
-                        {
                             errorProvider1.SetError(txtICEClient, "ICE de Client est déjà Existant");
-                        }
                         else
                         {
                             if (IsRaisonSocialeClientExists(txtRaisonSocialClient.Text) == false)
@@ -1346,8 +1338,11 @@ namespace GestionAffaire
                                     int t = int.Parse(txtICEClient.Text);
 
                                     con.Open();
-                                    cmd.CommandText = "insert into Client values('" + txtICEClient.Text + "','" + txtRaisonSocialClient.Text + "')";
+                                    cmd.CommandText = "insert into Client values(@ice,@rs)";
+                                    cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
+                                    cmd.Parameters.AddWithValue("@rs", txtRaisonSocialClient.Text);
                                     cmd.ExecuteNonQuery();
+                                    cmd.Parameters.Clear();
                                     con.Close();
 
                                     MessageBox.Show("Client Ajouter Avec Succès");
@@ -1382,9 +1377,7 @@ namespace GestionAffaire
                 if (txtNomRespo.Text != "")
                 {
                     if (IsRespoExists(txtNomRespo.Text) == true)
-                    {
                         errorProvider1.SetError(txtNomRespo, "Chargé d'affaire est déjà Existant");
-                    }
                     else
                     {
                         if (txtPrenomRespo.Text != "")
@@ -1392,8 +1385,11 @@ namespace GestionAffaire
                             try
                             {
                                 con.Open();
-                                cmd.CommandText = "insert into Responsable values('" + txtNomRespo.Text + "','" + txtPrenomRespo.Text + "',1)";
+                                cmd.CommandText = "insert into Responsable values(@nom,@prenom,1)";
+                                cmd.Parameters.AddWithValue("@nom", txtNomRespo.Text);
+                                cmd.Parameters.AddWithValue("@prenom", txtPrenomRespo.Text);
                                 cmd.ExecuteNonQuery();
+                                cmd.Parameters.Clear();
                                 con.Close();
 
                                 MessageBox.Show("Chargé d'affaire Ajouter Avec Succès");
@@ -1433,8 +1429,12 @@ namespace GestionAffaire
                                 try
                                 {
                                     con.Open();
-                                    cmd.CommandText = "insert into Personnel values('" + txtCinPersonne.Text + "','" + txtNomPersonne.Text + "','" + txtPrenomPresonne.Text + "',1)";
+                                    cmd.CommandText = "insert into Personnel values(@cin,@nom,@prenom,1)";
+                                    cmd.Parameters.AddWithValue("@cin", txtCinPersonne.Text);
+                                    cmd.Parameters.AddWithValue("@nom", txtNomPersonne.Text);
+                                    cmd.Parameters.AddWithValue("@prenom", txtPrenomPresonne.Text);
                                     cmd.ExecuteNonQuery();
+                                    cmd.Parameters.Clear();
                                     con.Close();
 
                                     MessageBox.Show("Personne Ajouter Avec Succès");
@@ -1478,28 +1478,31 @@ namespace GestionAffaire
                             {
                                 if (txtBanque.Text != "")
                                 {
-                                    //if (txtAgenceBanque.Text.Contains("'"))
-                                    //{
-                                    //    txtAgenceBanque.Text.Replace("'", "''");
-                                    //}
                                     if (IsBanqueExists(txtBanque.Text))
                                     {
                                         con.Open();
-                                        string aganceBanque = txtAgenceBanque.Text;
-                                        cmd.CommandText = "insert into Compte values('" + txtNumeroCompte.Text + "','" + aganceBanque + "','" + txtBanque + "',1)";
+                                        cmd.CommandText = "insert into Compte values(@numCompte,@agenceBanque,@banque,1)";
+                                        cmd.Parameters.AddWithValue("@numCompte", txtNumeroCompte.Text);
+                                        cmd.Parameters.AddWithValue("@agenceBanque", txtAgenceBanque.Text);
+                                        cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
                                         cmd.ExecuteNonQuery();
+                                        cmd.Parameters.Clear();
                                         con.Close();
 
                                     }
                                     else
                                     {
                                         con.Open();
-                                        cmd.CommandText = "insert into Banque values('" + txtBanque.Text + "')";
+                                        cmd.CommandText = "insert into Banque values(@banque)";
+                                        cmd.Parameters.AddWithValue("banque", txtBanque.Text);
                                         cmd.ExecuteNonQuery();
                                         cmd.Parameters.Clear();
-                                        string aganceBanque = txtAgenceBanque.Text.ToString();
-                                        cmd.CommandText = "insert into Compte values('" + txtNumeroCompte.Text + "','" + aganceBanque + "','" + txtBanque.Text + "',1)";
+                                        cmd.CommandText = "insert into Compte values(@numCompte,@agenceBanque,@banque,1)";
+                                        cmd.Parameters.AddWithValue("@numCompte", txtNumeroCompte.Text);
+                                        cmd.Parameters.AddWithValue("@agenceBanque", txtAgenceBanque.Text);
+                                        cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
                                         cmd.ExecuteNonQuery();
+                                        cmd.Parameters.Clear();
                                         con.Close();
 
                                     }
@@ -1550,8 +1553,11 @@ namespace GestionAffaire
                             if (txtRaisonSocialClient.Text != "")
                             {
                                 con.Open();
-                                cmd.CommandText = "update Client set raisonSociale='" + txtRaisonSocialClient.Text + "' where ICE='" + txtICEClient.Text + "'";
+                                cmd.CommandText = "update Client set raisonSociale=@rs where ICE=@ice";
+                                cmd.Parameters.AddWithValue("@rs", txtRaisonSocialClient.Text);
+                                cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
                                 cmd.ExecuteNonQuery();
+                                cmd.Parameters.Clear();
                                 con.Close();
 
                                 MessageBox.Show("Modification Avec Succès");
@@ -1586,8 +1592,11 @@ namespace GestionAffaire
                             try
                             {
                                 con.Open();
-                                cmd.CommandText = "update Responsable set prenom='" + txtPrenomRespo.Text + "' where nom='" + txtNomRespo.Text + "'";
+                                cmd.CommandText = "update Responsable set prenom=@prenom where nom=@nom";
+                                cmd.Parameters.AddWithValue("@prenom", txtPrenomRespo.Text);
+                                cmd.Parameters.AddWithValue("@nom", txtNomRespo.Text);
                                 cmd.ExecuteNonQuery();
+                                cmd.Parameters.Clear();
                                 con.Close();
 
                                 MessageBox.Show("Modification Avec Succès");
@@ -1625,8 +1634,12 @@ namespace GestionAffaire
                                 try
                                 {
                                     con.Open();
-                                    cmd.CommandText = "update Personnel set nom='" + txtNomPersonne.Text + "', prenom='" + txtPrenomPresonne.Text + "' where cin='" + txtCinPersonne.Text + "'";
+                                    cmd.CommandText = "update Personnel set nom=@nom, prenom=@prenom  where cin=@cin";
+                                    cmd.Parameters.AddWithValue("@nom", txtNomPersonne.Text);
+                                    cmd.Parameters.AddWithValue("@prenom", txtPrenomPresonne.Text);
+                                    cmd.Parameters.AddWithValue("@cin", txtCinPersonne.Text);
                                     cmd.ExecuteNonQuery();
+                                    cmd.Parameters.Clear();
                                     con.Close();
 
                                     MessageBox.Show("Modification Avec Succès");
@@ -1672,18 +1685,26 @@ namespace GestionAffaire
                                     {
                                     
                                         con.Open();
-                                        cmd.CommandText = "update Compte set AgenceBanque='" + txtAgenceBanque.Text + "',Banque='" + txtBanque.Text + "' where numero='" + txtNumeroCompte.Text + "'";
+                                        cmd.CommandText = "update Compte set AgenceBanque=@agence ,Banque=@banque where numero=@num";
+                                        cmd.Parameters.AddWithValue("@agence", txtAgenceBanque.Text);
+                                        cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
+                                        cmd.Parameters.AddWithValue("@num", txtNumeroCompte.Text);
                                         cmd.ExecuteNonQuery();
+                                        cmd.Parameters.Clear();
                                         con.Close();
 
                                     }
                                     else
                                     {
                                         con.Open();
-                                        cmd.CommandText = "insert into Banque values('" + txtBanque.Text + "')";
+                                        cmd.CommandText = "insert into Banque values(@banque)";
+                                        cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
                                         cmd.ExecuteNonQuery();
                                         cmd.Parameters.Clear();
-                                        cmd.CommandText = "update Compte set AgenceBanque='" + txtAgenceBanque.Text + "', Banque='" + txtBanque.Text + "' where numero='" + txtNumeroCompte.Text + "'";
+                                        cmd.CommandText = "update Compte set AgenceBanque=@agence, Banque=@banque where numero=@num";
+                                        cmd.Parameters.AddWithValue("@agence", txtAgenceBanque.Text);
+                                        cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
+                                        cmd.Parameters.AddWithValue("@num", txtNumeroCompte.Text);
                                         cmd.ExecuteNonQuery();
                                         con.Close();
 
@@ -1720,10 +1741,11 @@ namespace GestionAffaire
             dt.Rows.Clear();
 
             con.Open();
-            cmd.CommandText = "select ICE,raisonSociale as 'Raison Sociale' from Client where ICE='" + txtICEClient.Text + "'";
+            cmd.CommandText = "select ICE,raisonSociale as 'Raison Sociale' from Client where ICE=@ice";
+            cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
             da.SelectCommand = cmd;
             da.Fill(dt);
-
+            cmd.Parameters.Clear();
             con.Close();
 
             ListClient.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -1741,9 +1763,11 @@ namespace GestionAffaire
             
 
             con.Open();
-            cmd.CommandText = "select Nom, Prenom, active from Responsable where nom='"+ txtNomRespo.Text +"'";
+            cmd.CommandText = "select Nom, Prenom, active from Responsable where nom=@nom";
+            cmd.Parameters.AddWithValue("@nom", txtNomRespo.Text);
             da.SelectCommand = cmd;
             da.Fill(dt);
+            cmd.Parameters.Clear();
             con.Close();
 
             ListRespo.DataSource = dt;
@@ -1758,9 +1782,11 @@ namespace GestionAffaire
             dt.Rows.Clear();
 
             con.Open();
-            cmd.CommandText = "select CIN, Nom, Prenom, active from Personnel where cin='" + txtCinPersonne.Text + "'";
+            cmd.CommandText = "select CIN, Nom, Prenom, active from Personnel where cin=@cin";
+            cmd.Parameters.AddWithValue("@cin", txtCinPersonne.Text);
             da.SelectCommand = cmd;
             da.Fill(dt);
+            cmd.Parameters.Clear();
             con.Close();
 
             listPersonnel.DataSource = dt;
@@ -1776,9 +1802,11 @@ namespace GestionAffaire
             dt.Rows.Clear();
 
             con.Open();
-            cmd.CommandText = "select Numero,AgenceBanque as 'Agence',Banque, active from Compte where numero='"+ txtNumeroCompte.Text +"'";
+            cmd.CommandText = "select Numero,AgenceBanque as 'Agence',Banque, active from Compte where numero=@num";
+            cmd.Parameters.AddWithValue("@num", txtNumeroCompte.Text);
             da.SelectCommand = cmd;
             da.Fill(dt);
+            cmd.Parameters.Clear();
             con.Close();
 
             ListComptes.DataSource = dt;
@@ -1807,8 +1835,10 @@ namespace GestionAffaire
                                 try
                                 {
                                     con.Open();
-                                    cmd.CommandText = "delete Client where ICE='" + txtICEClient.Text + "'";
+                                    cmd.CommandText = "delete Client where ICE=@ice";
+                                    cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
                                     cmd.ExecuteNonQuery();
+                                    cmd.Parameters.Clear();
                                     con.Close();
 
                                     MessageBox.Show("Suppression Avec Succès");
@@ -1866,13 +1896,18 @@ namespace GestionAffaire
                     con.Open();
                     if (Convert.ToBoolean(ListRespo.Rows[e.RowIndex].Cells[2].Value) == false)
                     {
-                        cmd.CommandText = "update Responsable set active=1 where nom='" + ListRespo.Rows[e.RowIndex].Cells[0].Value + "'";
+                        cmd.CommandText = "update Responsable set active=1 where nom=@nom";
+                        cmd.Parameters.AddWithValue("@nom", ListRespo.Rows[e.RowIndex].Cells[0].Value);
                         cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
                     }
                     else if (Convert.ToBoolean(ListRespo.Rows[e.RowIndex].Cells[2].Value) == true)
                     {
-                        cmd.CommandText = "update Responsable set active=0 where nom='" + ListRespo.Rows[e.RowIndex].Cells[0].Value + "'";
+                        cmd.CommandText = "update Responsable set active=0 where nom=@nom";
+                        cmd.Parameters.AddWithValue("@nom", ListRespo.Rows[e.RowIndex].Cells[0].Value);
                         cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
                     }
                     con.Close();
 
@@ -1893,13 +1928,17 @@ namespace GestionAffaire
                     con.Open();
                     if (Convert.ToBoolean(listPersonnel.Rows[e.RowIndex].Cells[3].Value) == false)
                     {
-                        cmd.CommandText = "update Personnel set active=1 where cin='" + listPersonnel.Rows[e.RowIndex].Cells[0].Value + "'";
+                        cmd.CommandText = "update Personnel set active=1 where cin=@cin";
+                        cmd.Parameters.AddWithValue("@cin", listPersonnel.Rows[e.RowIndex].Cells[0].Value);
                         cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
                     }
                     else
                     {
-                        cmd.CommandText = "update Personnel set active=0 where cin='" + listPersonnel.Rows[e.RowIndex].Cells[0].Value + "'";
+                        cmd.CommandText = "update Personnel set active=0 where cin=@cin";
+                        cmd.Parameters.AddWithValue("@cin", listPersonnel.Rows[e.RowIndex].Cells[0].Value);
                         cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
                     }
                     con.Close();
 
@@ -1920,13 +1959,17 @@ namespace GestionAffaire
                     con.Open();
                     if (Convert.ToBoolean(ListComptes.Rows[e.RowIndex].Cells[3].Value) == false)
                     {
-                        cmd.CommandText = "update Compte set active=1 where numero='" + ListComptes.Rows[e.RowIndex].Cells[0].Value + "'";
+                        cmd.CommandText = "update Compte set active=1 where numero=@num";
+                        cmd.Parameters.AddWithValue("@num", ListComptes.Rows[e.RowIndex].Cells[0].Value);
                         cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
                     }
                     else
                     {
-                        cmd.CommandText = "update Compte set active=0 where numero='" + ListComptes.Rows[e.RowIndex].Cells[0].Value + "'";
+                        cmd.CommandText = "update Compte set active=0 where numero=@num";
+                        cmd.Parameters.AddWithValue("@num", ListComptes.Rows[e.RowIndex].Cells[0].Value);
                         cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
                     }
                     con.Close();
 
@@ -3509,6 +3552,7 @@ namespace GestionAffaire
         }
         private void label55_Click(object sender, EventArgs e)
         {
+            errorProvider1.Dispose();
             listeEmployeOrdre.Items.Clear();
             remplirNomEmploye();
         }
@@ -4017,7 +4061,7 @@ namespace GestionAffaire
             else
                 errorProvider1.SetError(cmbNumeroDisposition, "cette Information est Obligatoire");
         }
-
+        
 
 
         private void button5_Click(object sender, EventArgs e){}
