@@ -1692,7 +1692,6 @@ namespace GestionAffaire
                                         cmd.ExecuteNonQuery();
                                         cmd.Parameters.Clear();
                                         con.Close();
-
                                     }
                                     else
                                     {
