@@ -162,13 +162,13 @@ namespace GestionAffaire
 
             if (etatNote == true)
             {
-                panel1.Height += 52;
+                panel1.Height += 48;
                 etatNote = false;
                 btnNote.Image = Properties.Resources.icons8_collapse_arrow_25;
             }
             else
             {
-                panel1.Height -= 52;
+                panel1.Height -= 48;
                 etatNote = true;
                 btnNote.Image = Properties.Resources.icons8_expand_arrow_25;
             }
@@ -186,13 +186,13 @@ namespace GestionAffaire
 
             if (etatOrdre == true)
             {
-                panel2.Height += 70;
+                panel2.Height += 48;
                 etatOrdre = false;
                 btnOrdreMission.Image = Properties.Resources.icons8_collapse_arrow_25;
             }
             else
             {
-                panel2.Height -= 70;
+                panel2.Height -= 48;
                 etatOrdre = true;
                 btnOrdreMission.Image = Properties.Resources.icons8_expand_arrow_25;
             }
@@ -577,6 +577,7 @@ namespace GestionAffaire
             cmbTypeFrais.Items.Add("Divers");
             cmbTypeFrais.Items.Add("Redéfinir...");
 
+            cmbTypeFraisRecheNote.Items.Add("");
             cmbTypeFraisRecheNote.Items.Add("Gazoil");
             cmbTypeFraisRecheNote.Items.Add("Autoroute");
             cmbTypeFraisRecheNote.Items.Add("Gardiennage");
@@ -607,6 +608,7 @@ namespace GestionAffaire
             cmbPCFrais.Items.Add("Sans");
             cmbPCFrais.Items.Add("Redéfinir...");
 
+            cmbPCFraisRecheNote.Items.Add("");
             cmbPCFraisRecheNote.Items.Add("Bon");
             cmbPCFraisRecheNote.Items.Add("Facture");
             cmbPCFraisRecheNote.Items.Add("Ticket");
@@ -1257,6 +1259,7 @@ namespace GestionAffaire
         {
             errorProvider1.Dispose();
 
+            // pour afficher juste le contenue de charge d'affaire
             if (radioButton2.Checked == true)
             {
                 radioButton3.Checked = false;
@@ -1273,6 +1276,7 @@ namespace GestionAffaire
         {
             errorProvider1.Dispose();
 
+            // pour afficher juste le contenue de client
             if (radioButton3.Checked == true)
             {
                 radioButton2.Checked = false;
@@ -1289,6 +1293,7 @@ namespace GestionAffaire
         {
             errorProvider1.Dispose();
 
+            // pour afficher juste le contenue de personnel
             if (radioButton1.Checked == true)
             {
                 radioButton2.Checked = false;
@@ -1305,6 +1310,7 @@ namespace GestionAffaire
         {
             errorProvider1.Dispose();
 
+            // pour afficher juste le contenue de compte
             if (radioButton4.Checked == true)
             {
                 radioButton2.Checked = false;
@@ -1328,25 +1334,35 @@ namespace GestionAffaire
                     if (txtRaisonSocialClient.Text != "")
                     {
                         if (IsClientExists(txtICEClient.Text) == true)
+                        {
+                            // si ice de client est deja existe dans la base de donnees
                             errorProvider1.SetError(txtICEClient, "ICE de Client est déjà Existant");
+                        }
                         else
                         {
+                            // si ice de client n'est pas existan dans la base de donnees
                             if (IsRaisonSocialeClientExists(txtRaisonSocialClient.Text) == false)
                             {
+                                // si le raison sociale n'est pas existe dans la base de donnees
                                 try
                                 {
-                                    int t = int.Parse(txtICEClient.Text);
+                                    // pour veriver ice si contient entier ou non
+                                    long t = long.Parse(txtICEClient.Text);
 
+                                    // ouvriteur la connection
                                     con.Open();
                                     cmd.CommandText = "insert into Client values(@ice,@rs)";
                                     cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
                                     cmd.Parameters.AddWithValue("@rs", txtRaisonSocialClient.Text);
                                     cmd.ExecuteNonQuery();
                                     cmd.Parameters.Clear();
+                                    // fermeteur la connection
                                     con.Close();
 
+                                    // afficher message d'insertion
                                     MessageBox.Show("Client Ajouter Avec Succès");
 
+                                    // vider et remplir les zone de texte
                                     txtICEClient.Text = txtRaisonSocialClient.Text = "";
                                     remplirListClient();
                                     RemplirIdClient();
@@ -1377,23 +1393,31 @@ namespace GestionAffaire
                 if (txtNomRespo.Text != "")
                 {
                     if (IsRespoExists(txtNomRespo.Text) == true)
+                    {
+                        // si nom de chargé d'affaire est deja existe dans la base de donnees
                         errorProvider1.SetError(txtNomRespo, "Chargé d'affaire est déjà Existant");
+                    }
                     else
                     {
+                        // si nom de chargé d'affaire n'est pas existe dans la base de donnees
                         if (txtPrenomRespo.Text != "")
                         {
                             try
                             {
+                                // ouvriteur la connection
                                 con.Open();
                                 cmd.CommandText = "insert into Responsable values(@nom,@prenom,1)";
                                 cmd.Parameters.AddWithValue("@nom", txtNomRespo.Text);
                                 cmd.Parameters.AddWithValue("@prenom", txtPrenomRespo.Text);
                                 cmd.ExecuteNonQuery();
                                 cmd.Parameters.Clear();
+                                // fermeteur la connection
                                 con.Close();
 
+                                // afficher message d'insertion
                                 MessageBox.Show("Chargé d'affaire Ajouter Avec Succès");
 
+                                // vider et remplir les zone de texte
                                 txtNomRespo.Text = txtPrenomRespo.Text = "";
                                 RemplirNomRespo();
                                 remplirBeneficaireNote();
@@ -1417,17 +1441,26 @@ namespace GestionAffaire
                 if (txtCinPersonne.Text != "")
                 {
                     if (IsEmployeCinExists(txtCinPersonne.Text) == true)
+                    {
+                        // si cin d'employe est deja existe dans la base de donnees
                         errorProvider1.SetError(txtCinPersonne, "Personne est déjà Existant avec cette CIN");
+                    }
                     else
                     {
+                        // si cin d'employe n'est pas existe dans la base de donnees
                         if (txtPrenomPresonne.Text != "" && txtNomPersonne.Text != "")
                         {
                             if (IsEmployeNomExists(txtNomPersonne.Text) == true)
+                            {
+                                // si nom d'employe est deja existe dans la base de donnees
                                 errorProvider1.SetError(txtNomPersonne, "Personne est déjà Existant avec ce Nom");
+                            }
                             else
                             {
+                                // si nom d'employe n'est pas existe dans la base de donnees
                                 try
                                 {
+                                    // ouvriteur la connection
                                     con.Open();
                                     cmd.CommandText = "insert into Personnel values(@cin,@nom,@prenom,1)";
                                     cmd.Parameters.AddWithValue("@cin", txtCinPersonne.Text);
@@ -1435,10 +1468,13 @@ namespace GestionAffaire
                                     cmd.Parameters.AddWithValue("@prenom", txtPrenomPresonne.Text);
                                     cmd.ExecuteNonQuery();
                                     cmd.Parameters.Clear();
+                                    // fermeteur la connection
                                     con.Close();
 
+                                    // afficher message d'insertion
                                     MessageBox.Show("Personne Ajouter Avec Succès");
 
+                                    // vider et remplir les zone de texte
                                     txtCinPersonne.Text = txtNomPersonne.Text = txtPrenomPresonne.Text = "";
                                     remplirCinEmploye();
                                     remplirNomEmploye();
@@ -1470,16 +1506,20 @@ namespace GestionAffaire
                 {
                     try
                     {
-                        Int64 t = Int64.Parse(txtNumeroCompte.Text);
+                        // veriver si format de numero compte est valide
+                        long t = long.Parse(txtNumeroCompte.Text);
 
+                        // si numero compte est deja exsite dans la base de donnees
                         if (IsCompteExists(txtNumeroCompte.Text) == false)
                         {
                             if (txtAgenceBanque.Text != "")
                             {
                                 if (txtBanque.Text != "")
                                 {
+                                    // si libelle de banque est deja existe
                                     if (IsBanqueExists(txtBanque.Text))
                                     {
+                                        // ouvriteur la connection
                                         con.Open();
                                         cmd.CommandText = "insert into Compte values(@numCompte,@agenceBanque,@banque,1)";
                                         cmd.Parameters.AddWithValue("@numCompte", txtNumeroCompte.Text);
@@ -1487,11 +1527,13 @@ namespace GestionAffaire
                                         cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
                                         cmd.ExecuteNonQuery();
                                         cmd.Parameters.Clear();
+                                        // fermeteur la connection
                                         con.Close();
 
                                     }
                                     else
                                     {
+                                        // ouvriteur la connection
                                         con.Open();
                                         cmd.CommandText = "insert into Banque values(@banque)";
                                         cmd.Parameters.AddWithValue("banque", txtBanque.Text);
@@ -1503,12 +1545,15 @@ namespace GestionAffaire
                                         cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
                                         cmd.ExecuteNonQuery();
                                         cmd.Parameters.Clear();
+                                        // fermeteur la connection
                                         con.Close();
 
                                     }
 
+                                    // afficher message d'insertion
                                     MessageBox.Show("Compte crée avec Succès");
 
+                                    // vider et remplir les zone de texte
                                     txtNumeroCompte.Text = txtAgenceBanque.Text = txtBanque.Text = "";
                                     remplirNumeroCompte();
                                     remplirListCompte();
@@ -1547,25 +1592,38 @@ namespace GestionAffaire
                     try
                     {
                         if (IsClientExists(txtICEClient.Text) == false)
+                        {  
+                            // si ice de client n'est pas existe dans la base de donnees
                             errorProvider1.SetError(txtICEClient, "Client n'est pas Existant");
+                        }
                         else
                         {
+                            // si ice de client est existe dans la base de donnees
                             if (txtRaisonSocialClient.Text != "")
                             {
-                                con.Open();
-                                cmd.CommandText = "update Client set raisonSociale=@rs where ICE=@ice";
-                                cmd.Parameters.AddWithValue("@rs", txtRaisonSocialClient.Text);
-                                cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
-                                cmd.ExecuteNonQuery();
-                                cmd.Parameters.Clear();
-                                con.Close();
+                                if (IsRaisonSocialeClientExists(txtRaisonSocialClient.Text) == false)
+                                {
+                                    // si raison sociale est deja existe dans la base de donnees
+                                    // ouvirteur la connection
+                                    con.Open();
+                                    cmd.CommandText = "update Client set raisonSociale=@rs where ICE=@ice";
+                                    cmd.Parameters.AddWithValue("@rs", txtRaisonSocialClient.Text);
+                                    cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
+                                    cmd.ExecuteNonQuery();
+                                    cmd.Parameters.Clear();
+                                    //fermeteur la connection
+                                    con.Close();
 
-                                MessageBox.Show("Modification Avec Succès");
+                                    //afficher message de modification
+                                    MessageBox.Show("Modification Avec Succès");
 
-                                txtICEClient.Text = txtRaisonSocialClient.Text = "";
-                                remplirListClient();
-                                RemplirIdClient();
-                            
+                                    // vider et remplir zone de texte
+                                    txtICEClient.Text = txtRaisonSocialClient.Text = "";
+                                    remplirListClient();
+                                    RemplirIdClient();
+                                }
+                                else
+                                    errorProvider1.SetError(txtRaisonSocialClient, "Raison Sociale de Client est déjà Existant");
                             }
                             else
                                 errorProvider1.SetError(txtRaisonSocialClient, "cette information est Obligatoire");
@@ -1584,23 +1642,31 @@ namespace GestionAffaire
                 if (txtNomRespo.Text != "")
                 {
                     if (IsRespoExists(txtNomRespo.Text) == false)
+                    {
+                        // si nom de charge d'affaire n'est pas existe dans la base de donnees
                         errorProvider1.SetError(txtNomRespo, "Chargé d'affaire n'est pas Existant");
+                    }
                     else
                     {
+                        // si nom de charge d'affaire est existe dans la base de donnees
                         if (txtPrenomRespo.Text != "")
                         {
                             try
                             {
+                                // ouvriteur la connection
                                 con.Open();
                                 cmd.CommandText = "update Responsable set prenom=@prenom where nom=@nom";
                                 cmd.Parameters.AddWithValue("@prenom", txtPrenomRespo.Text);
                                 cmd.Parameters.AddWithValue("@nom", txtNomRespo.Text);
                                 cmd.ExecuteNonQuery();
                                 cmd.Parameters.Clear();
+                                // fermetteur la connection
                                 con.Close();
 
+                                // afficher message de modification
                                 MessageBox.Show("Modification Avec Succès");
 
+                                // vider et remplir les zone de texte
                                 txtNomRespo.Text = txtPrenomRespo.Text = "";
                                 RemplirNomRespo();
                                 remplirListRespo();
@@ -1622,17 +1688,27 @@ namespace GestionAffaire
                 if (txtCinPersonne.Text != "")
                 {
                     if (IsEmployeCinExists(txtCinPersonne.Text) == false)
+                    {
+                        // si cin de personnel n'est pas existe dans la base de donnees
                         errorProvider1.SetError(txtCinPersonne, "Personne n'est pas Existant avec cette CIN");
+                    }
                     else
                     {
+                        // si cin de personnel est existe dans la base de donnees
                         if (txtPrenomPresonne.Text != "" && txtNomPersonne.Text != "")
                         {
                             if (IsEmployeNomExists(txtNomPersonne.Text) == true)
+                            {
+                                // si nom de personnel est existe dans la base de donnees
                                 errorProvider1.SetError(txtNomPersonne, "Personne est déjà Existant avec ce Nom");
+                            }
                             else
                             {
+                                // si nom de personnel n'est pas existe dans la base de donnees
                                 try
                                 {
+
+                                    // ouvreteur la connection
                                     con.Open();
                                     cmd.CommandText = "update Personnel set nom=@nom, prenom=@prenom  where cin=@cin";
                                     cmd.Parameters.AddWithValue("@nom", txtNomPersonne.Text);
@@ -1640,10 +1716,13 @@ namespace GestionAffaire
                                     cmd.Parameters.AddWithValue("@cin", txtCinPersonne.Text);
                                     cmd.ExecuteNonQuery();
                                     cmd.Parameters.Clear();
+                                    //fermeteur la connection
                                     con.Close();
 
+                                    // afficher le message de modification
                                     MessageBox.Show("Modification Avec Succès");
 
+                                    // vider et remplir les zone de texte
                                     txtCinPersonne.Text = txtNomPersonne.Text = txtPrenomPresonne.Text = "";
                                     remplirCinEmploye();
                                     remplirNomEmploye();
@@ -1654,15 +1733,15 @@ namespace GestionAffaire
                                     MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                                 }
                             }
-                        }
-                        else
-                        {
-                            if (txtNomPersonne.Text == "")
-                                errorProvider1.SetError(txtNomPersonne, "cette Information est Obligatoire");
-                            if (txtPrenomPresonne.Text == "")
-                                errorProvider1.SetError(txtPrenomPresonne, "cette Information est Obligatoire");
-                        }
                     }
+                    else
+                    {
+                        if (txtNomPersonne.Text == "")
+                            errorProvider1.SetError(txtNomPersonne, "cette Information est Obligatoire");
+                        if (txtPrenomPresonne.Text == "")
+                            errorProvider1.SetError(txtPrenomPresonne, "cette Information est Obligatoire");
+                    }
+                }
                 }
                 else
                     errorProvider1.SetError(txtNomPersonne, "cette information est Obligatoire");
@@ -1672,9 +1751,13 @@ namespace GestionAffaire
                 if (txtNumeroCompte.Text != "")
                 {
                     if (IsCompteExists(txtNumeroCompte.Text) == false)
+                    {
+                        // si le compte n'est pas existe dans la base de donnees
                         errorProvider1.SetError(txtNumeroCompte, "Compte n'est pas Existant");
+                    }
                     else
                     {
+                        // si le compte est existe dans la base de donnees
                         if (txtAgenceBanque.Text != "")
                         {
                             if (txtBanque.Text != "")
@@ -1683,7 +1766,7 @@ namespace GestionAffaire
                                 {
                                     if (IsBanqueExists(txtBanque.Text))
                                     {
-                                    
+                                        // si la banque est existe dans la base de donnees
                                         con.Open();
                                         cmd.CommandText = "update Compte set AgenceBanque=@agence ,Banque=@banque where numero=@num";
                                         cmd.Parameters.AddWithValue("@agence", txtAgenceBanque.Text);
@@ -1695,6 +1778,9 @@ namespace GestionAffaire
                                     }
                                     else
                                     {
+                                        // si la banque n'est pas existe dans la base de donnees
+
+                                        // ouvreteur la connection
                                         con.Open();
                                         cmd.CommandText = "insert into Banque values(@banque)";
                                         cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
@@ -1705,12 +1791,16 @@ namespace GestionAffaire
                                         cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
                                         cmd.Parameters.AddWithValue("@num", txtNumeroCompte.Text);
                                         cmd.ExecuteNonQuery();
+
+                                        // fermeteur la connection
                                         con.Close();
 
                                     }
 
+                                    // afficher le message de modification
                                     MessageBox.Show("Modification Avec Succès");
 
+                                    // vider et remplir les zone de texte
                                     txtNumeroCompte.Text = txtAgenceBanque.Text = txtBanque.Text = "";
                                     remplirNumeroCompte();
                                     remplirListCompte();
@@ -1736,60 +1826,74 @@ namespace GestionAffaire
         {
             errorProvider1.Dispose();
 
+            // instancer une table
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
+            // ouverteur la connection
             con.Open();
             cmd.CommandText = "select ICE,raisonSociale as 'Raison Sociale' from Client where ICE=@ice";
             cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
             da.SelectCommand = cmd;
             da.Fill(dt);
             cmd.Parameters.Clear();
+
+            // fermeteur la connection
             con.Close();
 
+            // remplir la liste de client a partir de datatable dt
             ListClient.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             ListClient.DataSource = dt;
 
+            // afficher ice dans la zone de texte
             txtRaisonSocialClient.Text = dt.Rows[0][1].ToString();
         }
         private void txtNomRespo_SelectedIndexChanged(object sender, EventArgs e)
         {
             errorProvider1.Dispose();
 
+            // instancer une datatable
             DataTable dt = new DataTable();
-            if (dt != null)
             dt.Rows.Clear();
             
-
+            // ouvreteur la connection
             con.Open();
             cmd.CommandText = "select Nom, Prenom, active from Responsable where nom=@nom";
             cmd.Parameters.AddWithValue("@nom", txtNomRespo.Text);
             da.SelectCommand = cmd;
             da.Fill(dt);
             cmd.Parameters.Clear();
+            // fermeteur la connection
             con.Close();
 
+            // remplir la liste des chargé d'affaire a partir de datatable dt
             ListRespo.DataSource = dt;
 
+            // afficher le prenom de chargé d'affaire dans la zone de texte
             txtPrenomRespo.Text = dt.Rows[0][1].ToString();
         }
         private void txtNomPersonne_SelectedIndexChanged(object sender, EventArgs e)
         {
             errorProvider1.Dispose();
 
+            // instancer une datatable
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
+            // ouverteur la connection
             con.Open();
             cmd.CommandText = "select CIN, Nom, Prenom, active from Personnel where cin=@cin";
             cmd.Parameters.AddWithValue("@cin", txtCinPersonne.Text);
             da.SelectCommand = cmd;
             da.Fill(dt);
             cmd.Parameters.Clear();
+            // fermeteur la connection
             con.Close();
 
+            // remplir la liste des personnel a partir de datatable dt
             listPersonnel.DataSource = dt;
 
+            // afficher le nom et prenom dans la zone de texte
             txtNomPersonne.Text = dt.Rows[0][1].ToString();
             txtPrenomPresonne.Text = dt.Rows[0][2].ToString();
         }
@@ -1797,19 +1901,25 @@ namespace GestionAffaire
         {
             errorProvider1.Dispose();
 
+            // istancer une datatable
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
+            // ouverteur la connection
             con.Open();
             cmd.CommandText = "select Numero,AgenceBanque as 'Agence',Banque, active from Compte where numero=@num";
             cmd.Parameters.AddWithValue("@num", txtNumeroCompte.Text);
             da.SelectCommand = cmd;
             da.Fill(dt);
             cmd.Parameters.Clear();
+
+            // fermeteur la connection
             con.Close();
 
+            // remplir la list des compte a partir de datatable dt
             ListComptes.DataSource = dt;
 
+            // afficher l'agence et la banque dans la zone de texte
             txtAgenceBanque.Text = dt.Rows[0][1].ToString();
             txtBanque.Text = dt.Rows[0][2].ToString();
         }
@@ -1822,26 +1932,39 @@ namespace GestionAffaire
                 if (txtICEClient.Text != "")
                 {
                     if (IsClientExists(txtICEClient.Text) == false)
+                    {
+                        // si ice de client n'est pas existe dans la base de donnees
                         errorProvider1.SetError(txtICEClient, "Client n'est pas Existant");
+                    }
                     else
                     {
+                        // si ice de client est existe dans la base de donnees
+
                         if (OnPeutSupprimerClient(txtICEClient.Text) == false)
+                        {
+                            // si le client a des affaire
                             MessageBox.Show("Vous ne pouvez pas supprimer ce Client car il contient une ou plusieur Affaire ", "Exception", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        }
                         else
                         {
+                            // si le client n'a pas des affaires
                             if (MessageBox.Show("voulez-vous supprimer Client?", "Supprimer Client", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
                                 try
                                 {
+                                    // ouverteur la connection
                                     con.Open();
                                     cmd.CommandText = "delete Client where ICE=@ice";
                                     cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
                                     cmd.ExecuteNonQuery();
                                     cmd.Parameters.Clear();
+                                    // fermeteur la connection
                                     con.Close();
 
+                                    // afficher le message de suppression
                                     MessageBox.Show("Suppression Avec Succès");
 
+                                    // vider et remplir les zone de texte
                                     txtICEClient.Text = txtRaisonSocialClient.Text = "";
                                     remplirListClient();
                                     RemplirIdClient();
@@ -1869,11 +1992,12 @@ namespace GestionAffaire
         {
             errorProvider1.Dispose();
 
+            // vider et remplir les zone de texte
+
             txtNomRespo.Text = txtPrenomRespo.Text = "";
             txtICEClient.Text = txtRaisonSocialClient.Text = "";
             txtNomPersonne.Text = txtCinPersonne.Text = txtPrenomPresonne.Text = "";
             txtNumeroCompte.Text = txtAgenceBanque.Text = txtBanque.Text = "";
-
 
             RemplirIdClient();
             remplirListClient();
@@ -1883,7 +2007,6 @@ namespace GestionAffaire
             remplirListEmploye();
             remplirListCompte();
         }
-        // liste responsable
         private void ListRespo_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.RowIndex < ListRespo.Rows.Count - 1)
@@ -1986,7 +2109,6 @@ namespace GestionAffaire
             errorProvider1.Dispose();
 
             DataTable dt = new DataTable();
-            if (dt != null)
             dt.Rows.Clear();
 
             con.Open();
@@ -2738,7 +2860,7 @@ namespace GestionAffaire
         }
 
 
-
+        
         // frais
         private void rbValiderNote_CheckedChanged(object sender, EventArgs e)
         {
@@ -3063,7 +3185,7 @@ namespace GestionAffaire
             else
                 cmbPCFraisRecheNote.DropDownStyle = ComboBoxStyle.DropDownList;
         }
-
+        
 
 
         // mission
@@ -4077,7 +4199,7 @@ namespace GestionAffaire
         private void btnModifierNote_Click(object sender, EventArgs e){}
         private void btnSupprimerNote_Click(object sender, EventArgs e){}
         private void cmbPCNoteRech_SelectedIndexChanged(object sender, EventArgs e){}
-        private void btnValiderMission_Click(object sender, EventArgs e) {}
+        private void btnValiderMission_Click(object sender, EventArgs e){}
         private void txtMontantAffAjouter_Validating(object sender, CancelEventArgs e){}
         private void imprimerToolStripMenuItem_Click(object sender, EventArgs e){}
         private void button6_Click(object sender, EventArgs e){}
@@ -4104,7 +4226,5 @@ namespace GestionAffaire
         private void checkBox2_CheckedChanged_1(object sender, EventArgs e){}
         private void btnSupprimerDisposition_Click(object sender, EventArgs e){}
         private void btnAjouterFrais_Click(object sender, EventArgs e){}
-
-        
     }
 }
