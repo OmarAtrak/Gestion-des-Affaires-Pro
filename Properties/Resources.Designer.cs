@@ -73,6 +73,16 @@ namespace GestionAffaire.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cef16581d6efe9006a13cec803dbb88e79908fd03e55ba394a0b5858 {
+            get {
+                object obj = ResourceManager.GetObject("cef16581d6efe9006a13cec803dbb88e79908fd03e55ba394a0b5858", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_add_48 {
             get {
                 object obj = ResourceManager.GetObject("icons8_add_48", resourceCulture);
@@ -96,6 +106,16 @@ namespace GestionAffaire.Properties {
         internal static System.Drawing.Bitmap icons8_collapse_arrow_25 {
             get {
                 object obj = ResourceManager.GetObject("icons8_collapse_arrow_25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_database_import_40 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-database-import-40", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

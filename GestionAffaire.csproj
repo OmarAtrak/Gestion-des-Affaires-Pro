@@ -27,7 +27,7 @@
     <ProductName>Gestion d%27affaire</ProductName>
     <PublisherName>Sothcom</PublisherName>
     <SuiteName>Sothcom</SuiteName>
-    <ApplicationRevision>34</ApplicationRevision>
+    <ApplicationRevision>35</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -248,6 +248,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="aqua_smooth_folder_documents.ico" />
+    <None Include="Icons\icons8-database-import-40.png" />
+    <None Include="Icons\cef16581d6efe9006a13cec803dbb88e79908fd03e55ba394a0b5858.png" />
     <None Include="Resources\icons8-folder-50.png" />
     <None Include="Icons\icons8-search-property-40.png" />
     <None Include="Icons\icons8-update-40.png" />
