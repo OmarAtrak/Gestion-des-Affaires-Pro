@@ -37,15 +37,6 @@ namespace GestionAffaire
             BoxMissionReche.Visible = false;
             BoxDisposition.Visible = false;
         }
-        private void affaireToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BoxNoteAjouter.Visible = true;
-            BoxAff.Visible = false;
-            BoxMission.Visible = false;
-            BoxPartiesInterecee.Visible = false;
-            BoxRecherchFraisdeNote.Visible = false;
-            BoxMissionReche.Visible = false;
-        }
         private void rechercheToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BoxNoteAjouter.Visible = true;
@@ -55,24 +46,6 @@ namespace GestionAffaire
             BoxRecherchFraisdeNote.Visible = false;
             BoxMissionReche.Visible = false;
             BoxDisposition.Visible = false;
-        }
-        private void pToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BoxAff.Visible = true;
-            BoxPartiesInterecee.Visible = false;
-            BoxNoteAjouter.Visible = false;
-            BoxMission.Visible = false;
-            BoxRecherchFraisdeNote.Visible = false;
-            BoxMissionReche.Visible = false;
-        }
-        private void missionToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            BoxMission.Visible = true;
-            BoxPartiesInterecee.Visible = false;
-            BoxAff.Visible = false;
-            BoxNoteAjouter.Visible = false;
-            BoxRecherchFraisdeNote.Visible = false;
-            BoxMissionReche.Visible = false;
         }
         private void lesPartiesIntereceeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -102,8 +75,6 @@ namespace GestionAffaire
             BoxAff.Visible = false;
             BoxNoteAjouter.Visible = false;
         }
-        private void rechercheDansLesFraisToolStripMenuItem_Click(object sender, EventArgs e){}
-        private void rechercherToolStripMenuItem_Click(object sender, EventArgs e){}
         private void miseAToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BoxDisposition.Visible = true;
@@ -2402,63 +2373,72 @@ namespace GestionAffaire
 
                         cmd.Parameters.Clear();
 
-                        cmd.CommandText = "select * from NoteFrais where affaire='" + cmbNumeroAff.Text + "'";
-                        da.SelectCommand = cmd;
-                        da.Fill(ds, "NoteFrais");
-
-                        cmd.Parameters.Clear();
-
-                        cmd.CommandText = "select noteFrais from Affaires where Numero='" + cmbNumeroAff.Text + "'";
-
-                        int noteFrais = 0;
-                        if (cmd.ExecuteScalar().ToString() != "")
-                        {
-                            noteFrais = int.Parse(cmd.ExecuteScalar().ToString());
-                        }
-
-                        cmd.Parameters.Clear();
-
-                        cmd.CommandText = "select * from Frais where noteFrais='" + noteFrais + "'";
-                        da.SelectCommand = cmd;
-                        da.Fill(ds, "Frais");
-
-                        cmd.Parameters.Clear();
-
-                        cmd.CommandText = "select * from Mission where affaire='" + cmbNumeroAff.Text + "'";
-                        da.SelectCommand = cmd;
-                        da.Fill(ds, "Mission");
-
-                        cmd.Parameters.Clear();
-
                         cmd.CommandText = "select Client from Affaires where Numero='" + cmbNumeroAff.Text + "'";
-
-                        string ice = "";
-                        if (cmd.ExecuteScalar().ToString() != "")
-                        {
-                            ice = cmd.ExecuteScalar().ToString();
-                        }
-
+                        string ice = cmd.ExecuteScalar().ToString();
                         cmd.Parameters.Clear();
 
                         cmd.CommandText = "select * from Client where ICE='" + ice + "'";
                         da.SelectCommand = cmd;
                         da.Fill(ds, "Client");
+
+                        cmd.Parameters.Clear();
+
+                        if (ds.Tables["Affaires"].Rows[0][3].ToString() != "")
+                        {
+                            cmd.CommandText = "select NoteFrais from Affaires where Numero='" + cmbNumeroAff.Text + "'";
+                            int noteFrais = 0;
+                            if (cmd.ExecuteScalar().ToString() != "")
+                                noteFrais = int.Parse(cmd.ExecuteScalar().ToString());
+                            cmd.Parameters.Clear();
+
+
+                            if (noteFrais != 0)
+                            {
+                                cmd.CommandText = "select * from NoteFrais where Numero='" + noteFrais + "'";
+                                da.SelectCommand = cmd;
+                                da.Fill(ds, "NoteFrais");
+
+                                cmd.Parameters.Clear();
+
+                                cmd.CommandText = "select * from Frais where noteFrais='" + noteFrais + "'";
+                                da.SelectCommand = cmd;
+                                da.Fill(ds, "Frais");
+                            }
+                        }
+
                         con.Close();
 
-                        CrystalReport1 cr = new CrystalReport1();
-                        cr.Database.Tables["Affaires"].SetDataSource(ds.Tables[0]);
-                        cr.Database.Tables["NoteFrais"].SetDataSource(ds.Tables[1]);
-                        cr.Database.Tables["Frais"].SetDataSource(ds.Tables[2]);
-                        cr.Database.Tables["Mission"].SetDataSource(ds.Tables[3]);
-                        cr.Database.Tables["Client"].SetDataSource(ds.Tables[4]);
 
-                        Form2 f = new Form2();
-                        f.crystalReportViewer1.ReportSource = null;
-                        f.crystalReportViewer1.ReportSource = cr;
-                        f.crystalReportViewer1.Refresh();
+                        if (ds.Tables["Affaires"].Rows[0][3].ToString() != "")
+                        {
+                            CrystalReport1C cr = new CrystalReport1C();
+                            cr.Database.Tables["Affaires"].SetDataSource(ds.Tables[0]);
+                            cr.Database.Tables["Client"].SetDataSource(ds.Tables[1]);
+                            cr.Database.Tables["NoteFrais"].SetDataSource(ds.Tables[2]);
+                            cr.Database.Tables["Frais"].SetDataSource(ds.Tables[3]);
 
-                        f.Show();
-                        this.Hide();
+                            Form5 f = new Form5();
+                            f.crystalReportViewer1.ReportSource = null;
+                            f.crystalReportViewer1.ReportSource = cr;
+                            f.crystalReportViewer1.Refresh();
+
+                            f.Show();
+                            this.Hide();
+                        }
+                        else
+                        {
+                            CrystalReport1 cr = new CrystalReport1();
+                            cr.Database.Tables["Affaires"].SetDataSource(ds.Tables[0]);
+                            cr.Database.Tables["Client"].SetDataSource(ds.Tables[1]);
+
+                            Form2 f = new Form2();
+                            f.crystalReportViewer1.ReportSource = null;
+                            f.crystalReportViewer1.ReportSource = cr;
+                            f.crystalReportViewer1.Refresh();
+
+                            f.Show();
+                            this.Hide();
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -2527,6 +2507,7 @@ namespace GestionAffaire
                 // vider et remplir les zone de texte
                 remplirTypeNote();
                 remplirPCNote();
+
                 txtDateFrais.Text = "";
                 txtFraisFrais.Text = "0";
             }
@@ -2775,7 +2756,7 @@ namespace GestionAffaire
 
                             listFraisNote.Rows.Clear();
 
-                            cmbNumeroNote.Text = cmbTypeFrais.Text = cmbPCFrais.Text = cmbNumAffaireNote.Text = txtDateNote.Text = txtDateFrais.Text = txtTotalFraisNote.Text = txtNumAff.Text = "";
+                            cmbNumeroNote.Text = cmbTypeFrais.Text = cmbPCFrais.Text = cmbNumAffaireNote.Text = txtDateNote.Text = txtDateFrais.Text = txtTotalFraisNote.Text = txtNumAff.Text = txtRespoNote.Text = "";
                             txtFraisFrais.Text = (0.00).ToString();
                         }
                         catch (Exception ex)
@@ -4325,6 +4306,35 @@ namespace GestionAffaire
         private void BoxClientAjouter_Enter(object sender, EventArgs e){}
         private void noteDeFraisToolStripMenuItem_Click(object sender, EventArgs e){}
         private void missionToolStripMenuItem_Click(object sender, EventArgs e){}
+        private void rechercherToolStripMenuItem_Click(object sender, EventArgs e){}
+        private void affaireToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BoxNoteAjouter.Visible = true;
+            BoxAff.Visible = false;
+            BoxMission.Visible = false;
+            BoxPartiesInterecee.Visible = false;
+            BoxRecherchFraisdeNote.Visible = false;
+            BoxMissionReche.Visible = false;
+        }
+        private void pToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BoxAff.Visible = true;
+            BoxPartiesInterecee.Visible = false;
+            BoxNoteAjouter.Visible = false;
+            BoxMission.Visible = false;
+            BoxRecherchFraisdeNote.Visible = false;
+            BoxMissionReche.Visible = false;
+        }
+        private void missionToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            BoxMission.Visible = true;
+            BoxPartiesInterecee.Visible = false;
+            BoxAff.Visible = false;
+            BoxNoteAjouter.Visible = false;
+            BoxRecherchFraisdeNote.Visible = false;
+            BoxMissionReche.Visible = false;
+        }
+        private void rechercheDansLesFraisToolStripMenuItem_Click(object sender, EventArgs e) { }
         private void txtNumeroNote_TextChanged(object sender, EventArgs e){}
         private void ListAff_CellContentClick(object sender, DataGridViewCellEventArgs e){}
         private void ListAff_CellContentClick_1(object sender, DataGridViewCellEventArgs e){}

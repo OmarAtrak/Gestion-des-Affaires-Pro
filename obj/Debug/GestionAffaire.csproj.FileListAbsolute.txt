@@ -168,3 +168,4 @@ C:\Users\OMAR\source\repos\github\obj\Debug\GestionAffaire.application
 C:\Users\OMAR\source\repos\github\obj\Debug\GestionAffaire.csproj.CopyComplete
 C:\Users\OMAR\source\repos\github\obj\Debug\GestionAffaire.exe
 C:\Users\OMAR\source\repos\github\obj\Debug\GestionAffaire.pdb
+C:\Users\OMAR\source\repos\github\obj\Debug\GestionAffaire.Form5.resources

@@ -2394,6 +2394,8 @@ namespace GestionAffaire {
             
             private global::System.Data.DataColumn columnprenom;
             
+            private global::System.Data.DataColumn columnactive;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public ResponsableDataTable() {
@@ -2445,6 +2447,14 @@ namespace GestionAffaire {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn activeColumn {
+                get {
+                    return this.columnactive;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2480,11 +2490,12 @@ namespace GestionAffaire {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public ResponsableRow AddResponsableRow(string nom, string prenom) {
+            public ResponsableRow AddResponsableRow(string nom, string prenom, int active) {
                 ResponsableRow rowResponsableRow = ((ResponsableRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         nom,
-                        prenom};
+                        prenom,
+                        active};
                 rowResponsableRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowResponsableRow);
                 return rowResponsableRow;
@@ -2516,6 +2527,7 @@ namespace GestionAffaire {
             internal void InitVars() {
                 this.columnnom = base.Columns["nom"];
                 this.columnprenom = base.Columns["prenom"];
+                this.columnactive = base.Columns["active"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2525,6 +2537,8 @@ namespace GestionAffaire {
                 base.Columns.Add(this.columnnom);
                 this.columnprenom = new global::System.Data.DataColumn("prenom", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnprenom);
+                this.columnactive = new global::System.Data.DataColumn("active", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnactive);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnnom}, true));
                 this.columnnom.AllowDBNull = false;
@@ -3829,6 +3843,8 @@ namespace GestionAffaire {
             
             private global::System.Data.DataColumn columnprenom;
             
+            private global::System.Data.DataColumn columnactive;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public PersonnelDataTable() {
@@ -3888,6 +3904,14 @@ namespace GestionAffaire {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn activeColumn {
+                get {
+                    return this.columnactive;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -3923,12 +3947,13 @@ namespace GestionAffaire {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public PersonnelRow AddPersonnelRow(string cin, string nom, string prenom) {
+            public PersonnelRow AddPersonnelRow(string cin, string nom, string prenom, int active) {
                 PersonnelRow rowPersonnelRow = ((PersonnelRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         cin,
                         nom,
-                        prenom};
+                        prenom,
+                        active};
                 rowPersonnelRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPersonnelRow);
                 return rowPersonnelRow;
@@ -3961,6 +3986,7 @@ namespace GestionAffaire {
                 this.columncin = base.Columns["cin"];
                 this.columnnom = base.Columns["nom"];
                 this.columnprenom = base.Columns["prenom"];
+                this.columnactive = base.Columns["active"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3972,6 +3998,8 @@ namespace GestionAffaire {
                 base.Columns.Add(this.columnnom);
                 this.columnprenom = new global::System.Data.DataColumn("prenom", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnprenom);
+                this.columnactive = new global::System.Data.DataColumn("active", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnactive);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columncin}, true));
                 this.columncin.AllowDBNull = false;
@@ -5077,6 +5105,22 @@ namespace GestionAffaire {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int active {
+                get {
+                    try {
+                        return ((int)(this[this.tableResponsable.activeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'active\' in table \'Responsable\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableResponsable.activeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsprenomNull() {
                 return this.IsNull(this.tableResponsable.prenomColumn);
             }
@@ -5085,6 +5129,18 @@ namespace GestionAffaire {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetprenomNull() {
                 this[this.tableResponsable.prenomColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsactiveNull() {
+                return this.IsNull(this.tableResponsable.activeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetactiveNull() {
+                this[this.tableResponsable.activeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5518,6 +5574,22 @@ namespace GestionAffaire {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int active {
+                get {
+                    try {
+                        return ((int)(this[this.tablePersonnel.activeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'active\' in table \'Personnel\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePersonnel.activeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsprenomNull() {
                 return this.IsNull(this.tablePersonnel.prenomColumn);
             }
@@ -5526,6 +5598,18 @@ namespace GestionAffaire {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetprenomNull() {
                 this[this.tablePersonnel.prenomColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsactiveNull() {
+                return this.IsNull(this.tablePersonnel.activeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetactiveNull() {
+                this[this.tablePersonnel.activeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8399,33 +8483,40 @@ SELECT Numero, affaire, totalFrais, date, respo, personnel FROM NoteFrais WHERE 
             tableMapping.DataSetTable = "Responsable";
             tableMapping.ColumnMappings.Add("nom", "nom");
             tableMapping.ColumnMappings.Add("prenom", "prenom");
+            tableMapping.ColumnMappings.Add("active", "active");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Responsable] WHERE (([nom] = @Original_nom) AND ((@IsNull_pren" +
-                "om = 1 AND [prenom] IS NULL) OR ([prenom] = @Original_prenom)))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Responsable] WHERE (([nom] = @Original_nom) AND ((@IsNull_prenom = 1" +
+                " AND [prenom] IS NULL) OR ([prenom] = @Original_prenom)) AND ((@IsNull_active = " +
+                "1 AND [active] IS NULL) OR ([active] = @Original_active)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_nom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "nom", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_prenom", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_prenom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Responsable] ([nom], [prenom]) VALUES (@nom, @prenom);\r\nSELECT" +
-                " nom, prenom FROM Responsable WHERE (nom = @nom)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [Responsable] ([nom], [prenom], [active]) VALUES (@nom, @prenom, @act" +
+                "ive);\r\nSELECT nom, prenom, active FROM Responsable WHERE (nom = @nom)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@nom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "nom", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@prenom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Responsable] SET [nom] = @nom, [prenom] = @prenom WHERE (([nom] = @" +
-                "Original_nom) AND ((@IsNull_prenom = 1 AND [prenom] IS NULL) OR ([prenom] = @Ori" +
-                "ginal_prenom)));\r\nSELECT nom, prenom FROM Responsable WHERE (nom = @nom)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Responsable] SET [nom] = @nom, [prenom] = @prenom, [active] = @active WHERE (([nom] = @Original_nom) AND ((@IsNull_prenom = 1 AND [prenom] IS NULL) OR ([prenom] = @Original_prenom)) AND ((@IsNull_active = 1 AND [active] IS NULL) OR ([active] = @Original_active)));
+SELECT nom, prenom, active FROM Responsable WHERE (nom = @nom)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@nom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "nom", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@prenom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_nom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "nom", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_prenom", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_prenom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8441,7 +8532,7 @@ SELECT Numero, affaire, totalFrais, date, respo, personnel FROM NoteFrais WHERE 
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT nom, prenom FROM dbo.Responsable";
+            this._commandCollection[0].CommandText = "SELECT nom, prenom, active FROM Responsable";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -8502,7 +8593,7 @@ SELECT Numero, affaire, totalFrais, date, respo, personnel FROM NoteFrais WHERE 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(string Original_nom, string Original_prenom) {
+        public virtual int Delete(string Original_nom, string Original_prenom, global::System.Nullable<int> Original_active) {
             if ((Original_nom == null)) {
                 throw new global::System.ArgumentNullException("Original_nom");
             }
@@ -8516,6 +8607,14 @@ SELECT Numero, affaire, totalFrais, date, respo, personnel FROM NoteFrais WHERE 
             else {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_prenom));
+            }
+            if ((Original_active.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((int)(Original_active.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -8537,7 +8636,7 @@ SELECT Numero, affaire, totalFrais, date, respo, personnel FROM NoteFrais WHERE 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string nom, string prenom) {
+        public virtual int Insert(string nom, string prenom, global::System.Nullable<int> active) {
             if ((nom == null)) {
                 throw new global::System.ArgumentNullException("nom");
             }
@@ -8549,6 +8648,12 @@ SELECT Numero, affaire, totalFrais, date, respo, personnel FROM NoteFrais WHERE 
             }
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(prenom));
+            }
+            if ((active.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((int)(active.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -8570,7 +8675,7 @@ SELECT Numero, affaire, totalFrais, date, respo, personnel FROM NoteFrais WHERE 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string nom, string prenom, string Original_nom, string Original_prenom) {
+        public virtual int Update(string nom, string prenom, global::System.Nullable<int> active, string Original_nom, string Original_prenom, global::System.Nullable<int> Original_active) {
             if ((nom == null)) {
                 throw new global::System.ArgumentNullException("nom");
             }
@@ -8583,19 +8688,33 @@ SELECT Numero, affaire, totalFrais, date, respo, personnel FROM NoteFrais WHERE 
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(prenom));
             }
+            if ((active.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(active.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
             if ((Original_nom == null)) {
                 throw new global::System.ArgumentNullException("Original_nom");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(Original_nom));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Original_nom));
             }
             if ((Original_prenom == null)) {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_prenom));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Original_prenom));
+            }
+            if ((Original_active.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_active.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -8617,8 +8736,8 @@ SELECT Numero, affaire, totalFrais, date, respo, personnel FROM NoteFrais WHERE 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string prenom, string Original_nom, string Original_prenom) {
-            return this.Update(Original_nom, prenom, Original_nom, Original_prenom);
+        public virtual int Update(string prenom, global::System.Nullable<int> active, string Original_nom, string Original_prenom, global::System.Nullable<int> Original_active) {
+            return this.Update(Original_nom, prenom, active, Original_nom, Original_prenom, Original_active);
         }
     }
     
@@ -10177,37 +10296,46 @@ SELECT numero, personne, montant, compte FROM MiseDisposition WHERE (numero = @n
             tableMapping.ColumnMappings.Add("cin", "cin");
             tableMapping.ColumnMappings.Add("nom", "nom");
             tableMapping.ColumnMappings.Add("prenom", "prenom");
+            tableMapping.ColumnMappings.Add("active", "active");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Personnel] WHERE (([cin] = @Original_cin) AND ([nom] = @Origin" +
-                "al_nom) AND ((@IsNull_prenom = 1 AND [prenom] IS NULL) OR ([prenom] = @Original_" +
-                "prenom)))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Personnel] WHERE (([cin] = @Original_cin) AND ([nom] = @Original_nom" +
+                ") AND ((@IsNull_prenom = 1 AND [prenom] IS NULL) OR ([prenom] = @Original_prenom" +
+                ")) AND ((@IsNull_active = 1 AND [active] IS NULL) OR ([active] = @Original_activ" +
+                "e)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_cin", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "cin", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_nom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "nom", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_prenom", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_prenom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Personnel] ([cin], [nom], [prenom]) VALUES (@cin, @nom, @preno" +
-                "m);\r\nSELECT cin, nom, prenom FROM Personnel WHERE (cin = @cin)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [Personnel] ([cin], [nom], [prenom], [active]) VALUES (@cin, @nom, @p" +
+                "renom, @active);\r\nSELECT cin, nom, prenom, active FROM Personnel WHERE (cin = @c" +
+                "in)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@cin", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "cin", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@nom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "nom", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@prenom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Personnel] SET [cin] = @cin, [nom] = @nom, [prenom] = @prenom WHERE (([cin] = @Original_cin) AND ([nom] = @Original_nom) AND ((@IsNull_prenom = 1 AND [prenom] IS NULL) OR ([prenom] = @Original_prenom)));
-SELECT cin, nom, prenom FROM Personnel WHERE (cin = @cin)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Personnel] SET [cin] = @cin, [nom] = @nom, [prenom] = @prenom, [active] = @active WHERE (([cin] = @Original_cin) AND ([nom] = @Original_nom) AND ((@IsNull_prenom = 1 AND [prenom] IS NULL) OR ([prenom] = @Original_prenom)) AND ((@IsNull_active = 1 AND [active] IS NULL) OR ([active] = @Original_active)));
+SELECT cin, nom, prenom, active FROM Personnel WHERE (cin = @cin)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@cin", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "cin", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@nom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "nom", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@prenom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_cin", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "cin", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_nom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "nom", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_prenom", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_prenom", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "prenom", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_active", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "active", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10223,7 +10351,7 @@ SELECT cin, nom, prenom FROM Personnel WHERE (cin = @cin)";
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT cin, nom, prenom FROM dbo.Personnel";
+            this._commandCollection[0].CommandText = "SELECT cin, nom, prenom, active FROM Personnel";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -10284,7 +10412,7 @@ SELECT cin, nom, prenom FROM Personnel WHERE (cin = @cin)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(string Original_cin, string Original_nom, string Original_prenom) {
+        public virtual int Delete(string Original_cin, string Original_nom, string Original_prenom, global::System.Nullable<int> Original_active) {
             if ((Original_cin == null)) {
                 throw new global::System.ArgumentNullException("Original_cin");
             }
@@ -10304,6 +10432,14 @@ SELECT cin, nom, prenom FROM Personnel WHERE (cin = @cin)";
             else {
                 this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_prenom));
+            }
+            if ((Original_active.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((int)(Original_active.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -10325,7 +10461,7 @@ SELECT cin, nom, prenom FROM Personnel WHERE (cin = @cin)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string cin, string nom, string prenom) {
+        public virtual int Insert(string cin, string nom, string prenom, global::System.Nullable<int> active) {
             if ((cin == null)) {
                 throw new global::System.ArgumentNullException("cin");
             }
@@ -10343,6 +10479,12 @@ SELECT cin, nom, prenom FROM Personnel WHERE (cin = @cin)";
             }
             else {
                 this.Adapter.InsertCommand.Parameters[2].Value = ((string)(prenom));
+            }
+            if ((active.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((int)(active.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -10364,7 +10506,7 @@ SELECT cin, nom, prenom FROM Personnel WHERE (cin = @cin)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string cin, string nom, string prenom, string Original_cin, string Original_nom, string Original_prenom) {
+        public virtual int Update(string cin, string nom, string prenom, global::System.Nullable<int> active, string Original_cin, string Original_nom, string Original_prenom, global::System.Nullable<int> Original_active) {
             if ((cin == null)) {
                 throw new global::System.ArgumentNullException("cin");
             }
@@ -10383,25 +10525,39 @@ SELECT cin, nom, prenom FROM Personnel WHERE (cin = @cin)";
             else {
                 this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(prenom));
             }
+            if ((active.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(active.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
             if ((Original_cin == null)) {
                 throw new global::System.ArgumentNullException("Original_cin");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Original_cin));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_cin));
             }
             if ((Original_nom == null)) {
                 throw new global::System.ArgumentNullException("Original_nom");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_nom));
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Original_nom));
             }
             if ((Original_prenom == null)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_prenom));
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_prenom));
+            }
+            if ((Original_active.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_active.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -10423,8 +10579,8 @@ SELECT cin, nom, prenom FROM Personnel WHERE (cin = @cin)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string nom, string prenom, string Original_cin, string Original_nom, string Original_prenom) {
-            return this.Update(Original_cin, nom, prenom, Original_cin, Original_nom, Original_prenom);
+        public virtual int Update(string nom, string prenom, global::System.Nullable<int> active, string Original_cin, string Original_nom, string Original_prenom, global::System.Nullable<int> Original_active) {
+            return this.Update(Original_cin, nom, prenom, active, Original_cin, Original_nom, Original_prenom, Original_active);
         }
     }
     
