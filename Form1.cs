@@ -2944,6 +2944,7 @@ namespace GestionAffaire
                                 txtDateFrais.Text = txtFraisFrais.Text = "";
                                 txtFraisFrais.Enabled = true;
                                 cmbTypeFrais.DropDownStyle = ComboBoxStyle.DropDownList;
+                                cmbPCFrais.DropDownStyle = ComboBoxStyle.DropDownList;
                                 numeroFrais();
                             }
                             else
@@ -2980,6 +2981,7 @@ namespace GestionAffaire
                                 txtDateFrais.Text = txtFraisFrais.Text = "";
                                 txtFraisFrais.Enabled = true;
                                 cmbTypeFrais.DropDownStyle = ComboBoxStyle.DropDownList;
+                                cmbPCFrais.DropDownStyle = ComboBoxStyle.DropDownList;
                                 numeroFrais();
                             }
                             else
