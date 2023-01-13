@@ -4309,34 +4309,10 @@ namespace GestionAffaire
         private void noteDeFraisToolStripMenuItem_Click(object sender, EventArgs e){}
         private void missionToolStripMenuItem_Click(object sender, EventArgs e){}
         private void rechercherToolStripMenuItem_Click(object sender, EventArgs e){}
-        private void affaireToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BoxNoteAjouter.Visible = true;
-            BoxAff.Visible = false;
-            BoxMission.Visible = false;
-            BoxPartiesInterecee.Visible = false;
-            BoxRecherchFraisdeNote.Visible = false;
-            BoxMissionReche.Visible = false;
-        }
-        private void pToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BoxAff.Visible = true;
-            BoxPartiesInterecee.Visible = false;
-            BoxNoteAjouter.Visible = false;
-            BoxMission.Visible = false;
-            BoxRecherchFraisdeNote.Visible = false;
-            BoxMissionReche.Visible = false;
-        }
-        private void missionToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            BoxMission.Visible = true;
-            BoxPartiesInterecee.Visible = false;
-            BoxAff.Visible = false;
-            BoxNoteAjouter.Visible = false;
-            BoxRecherchFraisdeNote.Visible = false;
-            BoxMissionReche.Visible = false;
-        }
-        private void rechercheDansLesFraisToolStripMenuItem_Click(object sender, EventArgs e) { }
+        private void affaireToolStripMenuItem_Click(object sender, EventArgs e){}
+        private void pToolStripMenuItem_Click(object sender, EventArgs e){}
+        private void missionToolStripMenuItem1_Click(object sender, EventArgs e){}
+        private void rechercheDansLesFraisToolStripMenuItem_Click(object sender, EventArgs e){}
         private void txtNumeroNote_TextChanged(object sender, EventArgs e){}
         private void ListAff_CellContentClick(object sender, DataGridViewCellEventArgs e){}
         private void ListAff_CellContentClick_1(object sender, DataGridViewCellEventArgs e){}
