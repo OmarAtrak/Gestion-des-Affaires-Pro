@@ -223,7 +223,7 @@ namespace GestionAffaire
             cmbClientAff.Items.Clear();
             txtICEClient.Items.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select * from Client";
             da.SelectCommand = cmd;
             da.Fill(dt);
@@ -233,19 +233,19 @@ namespace GestionAffaire
                 txtICEClient.Items.Add(dt.Rows[i][0].ToString());
                 cmbClientAff.Items.Add(dt.Rows[i][1].ToString());
             }
-            con.Close();
+            deConnecter();
         }
         public void remplirListClient()
         {
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select ICE, raisonSociale as 'Raison Sociale' from Client";
             da.SelectCommand = cmd;
             da.Fill(dt);
 
-            con.Close();
+            deConnecter();
 
             ListClient.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             ListClient.DataSource = dt;
@@ -264,7 +264,7 @@ namespace GestionAffaire
             cmbRespoMission.Items.Clear();
             cmbRespoMissionReche.Items.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select nom from Responsable";
             da.SelectCommand = cmd;
             da.Fill(dt1);
@@ -288,18 +288,18 @@ namespace GestionAffaire
                 cmbRespoMission.Items.Add(dt2.Rows[i][0].ToString());
                 cmbRespoMissionReche.Items.Add(dt2.Rows[i][0].ToString());
             }
-            con.Close();
+            deConnecter();
         }
         public void remplirListRespo()
         {
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select Nom, Prenom, active from Responsable";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
 
             ListRespo.DataSource = dt;
         }
@@ -312,11 +312,11 @@ namespace GestionAffaire
 
             txtCinPersonne.Items.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select cin from Personnel";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -331,7 +331,7 @@ namespace GestionAffaire
             cmbEmployeOrdre.Items.Clear();
             cmbPersonneDisposition.Items.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select nom from Personnel where active=1";
             da.SelectCommand = cmd;
             da.Fill(dt);
@@ -342,18 +342,18 @@ namespace GestionAffaire
                 cmbPersonneDisposition.Items.Add(dt.Rows[i][0].ToString());
                 
             }
-            con.Close();
+            deConnecter();
         }
         public void remplirListEmploye()
         {
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select CIN, Nom, Prenom, active from Personnel";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
 
             listPersonnel.DataSource = dt;
         }
@@ -374,7 +374,7 @@ namespace GestionAffaire
 
 
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select Numero from Affaires";
             da.SelectCommand = cmd;
             da.Fill(dt);
@@ -384,7 +384,7 @@ namespace GestionAffaire
             cmd.CommandText = "select distinct Affaires.Numero from Affaires left join NoteFrais on Affaires.Numero=affaire except select distinct Affaires.Numero from Affaires right join NoteFrais on Affaires.Numero=affaire";
             da.SelectCommand = cmd;
             da.Fill(dt2);
-            con.Close();
+            deConnecter();
 
 
             cmbAffMissionReche.Items.Add("");
@@ -408,11 +408,11 @@ namespace GestionAffaire
             if (dt != null)
             dt.Rows.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select Numero,raisonSociale as 'Client',Responsable as 'Chargé d''affaire',NoteFrais as 'Note de Frais',NbrJourEstimer as 'Nombre de jours Estimé',NbrJourConsommer as 'Nombre de jours Consommés' from Affaires inner join Client on Affaires.Client=Client.ICE";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
 
             ListAff.DataSource = dt;
 
@@ -436,7 +436,7 @@ namespace GestionAffaire
             }
 
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select Numero from NoteFrais";
             da.SelectCommand = cmd;
             da.Fill(dt);
@@ -446,7 +446,7 @@ namespace GestionAffaire
                 cmbNumeroNote.Items.Add(dt.Rows[i][0].ToString());
             }
 
-            con.Close();
+            deConnecter();
         }
         public void remplirListFraisNote()
         {
@@ -456,7 +456,7 @@ namespace GestionAffaire
                 dt.Rows.Clear();
             }
 
-            con.Open();
+            connecter();
             if (rbValiderNote.Checked == true)
             {
                 cmd.CommandText = "select Numero as 'Numero', Type as 'Type',PiecesComptables as 'Piece Comptable',convert(date,[date]) as [Date],frais as 'Frais' from Frais where noteFrais='" + txtNumeroNote.Text +"'";
@@ -475,7 +475,7 @@ namespace GestionAffaire
             }
             listFraisNote.Columns[3].DefaultCellStyle.Format = "dd/mm/yy";
 
-            con.Close();
+            deConnecter();
 
             //listFraisNote.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             //listFraisNote.DataSource = dt;
@@ -494,7 +494,7 @@ namespace GestionAffaire
             }
 
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select numero from Mission";
             da.SelectCommand = cmd;
             da.Fill(dt);
@@ -504,18 +504,18 @@ namespace GestionAffaire
                 cmbNumeroMission.Items.Add(dt.Rows[i][0].ToString());
             }
 
-            con.Close();
+            deConnecter();
         }
         public void remplirListMission()
         {
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select numero as 'Numero', respo as 'Chargé d''affaire',dateDebut as 'Date Debut',dateFin as 'Date Fin',NbrJour as 'Nombre de Jours',lieuDepart as 'Lieu Départ',lieuArriver as 'Lieu Arrivé',nbrPersonne as 'Nombre de Personne',affaire as 'Affaire' from Mission";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
 
             ListMission.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             ListMission.DataSource = dt;
@@ -601,11 +601,11 @@ namespace GestionAffaire
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select Numero,Type,PiecesComptables as 'Piece Comptable',Frais,Date,noteFrais as 'Note de Frais' from Frais";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
 
             ListRechercheFraisNote.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             ListRechercheFraisNote.DataSource = dt;
@@ -623,7 +623,7 @@ namespace GestionAffaire
             cmbCompteDisposition.Items.Clear();
 
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select Numero from Compte";
             da.SelectCommand = cmd;
             da.Fill(dt1);
@@ -633,7 +633,7 @@ namespace GestionAffaire
             cmd.CommandText = "select Numero from Compte where active=1";
             da.SelectCommand = cmd;
             da.Fill(dt2);
-            con.Close();
+            deConnecter();
 
             for (int i = 0; i < dt1.Rows.Count; i++)
             {
@@ -649,11 +649,11 @@ namespace GestionAffaire
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select Numero,AgenceBanque as 'Agence',Banque, active from Compte";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
 
             ListComptes.DataSource = dt;
 
@@ -667,11 +667,11 @@ namespace GestionAffaire
 
             cmbNumeroDisposition.Items.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select Numero from MiseDisposition";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -683,7 +683,7 @@ namespace GestionAffaire
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select Numero,personne as 'Bénéficiaire',cast(Montant as nvarchar) as 'Montant',compte as 'Compte Bancaire' from MiseDisposition";
             da.SelectCommand = cmd;
             da.Fill(dt);
@@ -697,7 +697,7 @@ namespace GestionAffaire
                 cmd.CommandText = "select nom from Personnel where cin='" + dt.Rows[i][1].ToString() + "'";
                 listDisposition.Rows[i].Cells[1].Value = cmd.ExecuteScalar().ToString();
             }
-            con.Close();
+            deConnecter();
 
         }
 
@@ -709,14 +709,14 @@ namespace GestionAffaire
 
             cmbRespoNote.Items.Clear();
 
-            con.Open();
+            connecter();
             if (radioButton5.Checked == true)
                 cmd.CommandText = "select nom from Responsable where active=1";
             else if (radioButton6.Checked == true)
                 cmd.CommandText = "select nom from Personnel where active=1";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -730,7 +730,7 @@ namespace GestionAffaire
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select cast(sum(montant) as nvarchar) from MiseDisposition";
             if (cmd.ExecuteScalar().ToString() != "")
                 lblTotalDisposition.Text = cmd.ExecuteScalar().ToString();
@@ -768,7 +768,7 @@ namespace GestionAffaire
             cmd.CommandText = "select count(*) from Compte where active=1";
             if (cmd.ExecuteScalar().ToString() != "")
                 nbrC.Text = cmd.ExecuteScalar().ToString();
-            con.Close();
+            deConnecter();
 
             double s = double.Parse(lblTotalDisposition.Text) - double.Parse(lblTotalFrais.Text);
             lblSolde.Text = s.ToString();
@@ -787,11 +787,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false; 
-            con.Open();
+            connecter();
             cmd.CommandText = "select Numero from Affaires where Numero='"+ affaire +"'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -810,11 +810,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select nom from Responsable where nom='" + nom + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -833,11 +833,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select ICE from Client where ICE='" + cin + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -854,11 +854,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select raisonSociale from Client where raisonSociale='" + raisonSociale + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -877,11 +877,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select Numero from NoteFrais where Numero='" + numero + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -900,11 +900,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select numero from Mission where numero='" + numero + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -919,11 +919,11 @@ namespace GestionAffaire
             dt.Rows.Clear();
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select numero from Frais where numero='" + numeroFrais + "' and noteFrais='"+ numeroNote + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -934,7 +934,7 @@ namespace GestionAffaire
         //methode pour savoir le numero de note des frais pour gerer le numero automatique
         public void NumeroNote()
         {
-            con.Open();
+            connecter();
             cmd.CommandText = "declare @num int = 1 " +
                               "while (exists(select Numero from NoteFrais where Numero = @num)) " +
                               "begin " +
@@ -942,7 +942,7 @@ namespace GestionAffaire
                               "end " +
                               "select @num";
             int numeroNote = int.Parse(cmd.ExecuteScalar().ToString());
-            con.Close();
+            deConnecter();
 
             txtNumeroNote.Text = numeroNote.ToString();
         }
@@ -950,7 +950,7 @@ namespace GestionAffaire
         //methode pour affecter le numero de frais
         public int NumeroFrais()
         {
-            con.Open();
+            connecter();
             cmd.CommandText = "declare @num int = 1 " +
                               "while (exists(select numero from Frais where numero = @num))" +
                               "begin " +
@@ -958,7 +958,7 @@ namespace GestionAffaire
                               "end " +
                               "select @num";
             int numeroNote = int.Parse(cmd.ExecuteScalar().ToString());
-            con.Close();
+            deConnecter();
 
             return numeroNote;
         }
@@ -974,11 +974,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select Responsable from Affaires where Responsable='" + nom + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -997,11 +997,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select respo from Mission where respo='" + nom + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -1020,11 +1020,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select respo from NoteFrais where respo='" + nom + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -1043,11 +1043,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select cin from Personnel where cin='" + cin + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -1064,11 +1064,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select top (1) cin from Personnel where nom='" + nom + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -1087,11 +1087,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select personnel from DetailMission where mission='" + mission + "' and personnel='"+ cinPersonne + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -1110,11 +1110,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select numero from Compte where numero='" + num + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -1133,11 +1133,11 @@ namespace GestionAffaire
             }
 
             Boolean isThere = false;
-            con.Open();
+            connecter();
             cmd.CommandText = "select libelle from Banque where libelle='" + libelle + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
             if (dt.Rows.Count != 0)
             {
                 isThere = true;
@@ -1155,7 +1155,7 @@ namespace GestionAffaire
             dt1.Rows.Clear();
             dt2.Rows.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select affaire from NoteFrais where affaire='" + affaire + "'";
             da.SelectCommand = cmd;
             da.Fill(dt1);
@@ -1163,7 +1163,7 @@ namespace GestionAffaire
             cmd.CommandText = "select affaire from Mission where affaire='" + affaire + "'";
             da.SelectCommand = cmd;
             da.Fill(dt2);
-            con.Close();
+            deConnecter();
 
             if (dt1.Rows.Count == 0 && dt2.Rows.Count == 0)
                 etat = true;
@@ -1179,11 +1179,11 @@ namespace GestionAffaire
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
-            con.Open();
+            connecter();
             cmd.CommandText = "select Client from Affaires where Client='" + ICE + "'";
             da.SelectCommand = cmd;
             da.Fill(dt);
-            con.Close();
+            deConnecter();
 
             if (dt.Rows.Count == 0)
                 etat = true;
@@ -1191,7 +1191,21 @@ namespace GestionAffaire
             return etat;
         }
 
-        
+        public void connecter()
+        {
+            if (con.State == ConnectionState.Closed || con.State == ConnectionState.Broken)
+            {
+                con.Open();
+            }
+        }
+        public void deConnecter()
+        {
+            if (con.State == ConnectionState.Open)
+            {
+                con.Close();
+            }
+        }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -1315,20 +1329,21 @@ namespace GestionAffaire
                             if (IsRaisonSocialeClientExists(txtRaisonSocialClient.Text) == false)
                             {
                                 // si le raison sociale n'est pas existe dans la base de donnees
+                                
                                 try
                                 {
                                     // pour veriver ice si contient entier ou non
                                     long t = long.Parse(txtICEClient.Text);
 
                                     // ouvriteur la connection
-                                    con.Open();
+                                    connecter();
                                     cmd.CommandText = "insert into Client values(@ice,@rs)";
                                     cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
                                     cmd.Parameters.AddWithValue("@rs", txtRaisonSocialClient.Text);
                                     cmd.ExecuteNonQuery();
                                     cmd.Parameters.Clear();
                                     // fermeture la connection
-                                    con.Close();
+                                    deConnecter();
 
                                     // afficher message d'insertion
                                     MessageBox.Show("Client Ajouter Avec Succès");
@@ -1343,6 +1358,7 @@ namespace GestionAffaire
                                 catch (FormatException ex)
                                 {
                                     MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                
                                 }
                                 catch (Exception ex)
                                 {
@@ -1376,14 +1392,14 @@ namespace GestionAffaire
                             try
                             {
                                 // ouvriteur la connection
-                                con.Open();
+                                connecter();
                                 cmd.CommandText = "insert into Responsable values(@nom,@prenom,1)";
                                 cmd.Parameters.AddWithValue("@nom", txtNomRespo.Text);
                                 cmd.Parameters.AddWithValue("@prenom", txtPrenomRespo.Text);
                                 cmd.ExecuteNonQuery();
                                 cmd.Parameters.Clear();
                                 // fermeture la connection
-                                con.Close();
+                                deConnecter();
 
                                 // afficher message d'insertion
                                 MessageBox.Show("Chargé d'affaire Ajouter Avec Succès");
@@ -1432,7 +1448,7 @@ namespace GestionAffaire
                                 try
                                 {
                                     // ouvriteur la connection
-                                    con.Open();
+                                    connecter();
                                     cmd.CommandText = "insert into Personnel values(@cin,@nom,@prenom,1)";
                                     cmd.Parameters.AddWithValue("@cin", txtCinPersonne.Text);
                                     cmd.Parameters.AddWithValue("@nom", txtNomPersonne.Text);
@@ -1440,7 +1456,7 @@ namespace GestionAffaire
                                     cmd.ExecuteNonQuery();
                                     cmd.Parameters.Clear();
                                     // fermeture la connection
-                                    con.Close();
+                                    deConnecter();
 
                                     // afficher message d'insertion
                                     MessageBox.Show("Personne Ajouter Avec Succès");
@@ -1490,45 +1506,66 @@ namespace GestionAffaire
                                     // si libelle de banque est deja existe
                                     if (IsBanqueExists(txtBanque.Text))
                                     {
-                                        // ouvriteur la connection
-                                        con.Open();
-                                        cmd.CommandText = "insert into Compte values(@numCompte,@agenceBanque,@banque,1)";
-                                        cmd.Parameters.AddWithValue("@numCompte", txtNumeroCompte.Text);
-                                        cmd.Parameters.AddWithValue("@agenceBanque", txtAgenceBanque.Text);
-                                        cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
-                                        cmd.ExecuteNonQuery();
-                                        cmd.Parameters.Clear();
-                                        // fermeture la connection
-                                        con.Close();
+                                        try
+                                        {
+                                            // ouvriteur la connection
+                                            connecter();
+                                            cmd.CommandText = "insert into Compte values(@numCompte,@agenceBanque,@banque,1)";
+                                            cmd.Parameters.AddWithValue("@numCompte", txtNumeroCompte.Text);
+                                            cmd.Parameters.AddWithValue("@agenceBanque", txtAgenceBanque.Text);
+                                            cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
+                                            cmd.ExecuteNonQuery();
+                                            cmd.Parameters.Clear();
+                                            // fermeture la connection
+                                            deConnecter();
 
+                                            // afficher message d'insertion
+                                            MessageBox.Show("Compte crée avec Succès");
+
+                                            // vider et remplir les zone de texte
+                                            txtNumeroCompte.Text = txtAgenceBanque.Text = txtBanque.Text = "";
+                                            remplirNumeroCompte();
+                                            remplirListCompte();
+                                            remplirAcceuil();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                        }
                                     }
                                     else
                                     {
-                                        // ouvriteur la connection
-                                        con.Open();
-                                        cmd.CommandText = "insert into Banque values(@banque)";
-                                        cmd.Parameters.AddWithValue("banque", txtBanque.Text);
-                                        cmd.ExecuteNonQuery();
-                                        cmd.Parameters.Clear();
-                                        cmd.CommandText = "insert into Compte values(@numCompte,@agenceBanque,@banque,1)";
-                                        cmd.Parameters.AddWithValue("@numCompte", txtNumeroCompte.Text);
-                                        cmd.Parameters.AddWithValue("@agenceBanque", txtAgenceBanque.Text);
-                                        cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
-                                        cmd.ExecuteNonQuery();
-                                        cmd.Parameters.Clear();
-                                        // fermeture la connection
-                                        con.Close();
+                                        try
+                                        {
+                                            // ouvriteur la connection
+                                            connecter();
+                                            cmd.CommandText = "insert into Banque values(@banque)";
+                                            cmd.Parameters.AddWithValue("banque", txtBanque.Text);
+                                            cmd.ExecuteNonQuery();
+                                            cmd.Parameters.Clear();
+                                            cmd.CommandText = "insert into Compte values(@numCompte,@agenceBanque,@banque,1)";
+                                            cmd.Parameters.AddWithValue("@numCompte", txtNumeroCompte.Text);
+                                            cmd.Parameters.AddWithValue("@agenceBanque", txtAgenceBanque.Text);
+                                            cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
+                                            cmd.ExecuteNonQuery();
+                                            cmd.Parameters.Clear();
+                                            // fermeture la connection
+                                            deConnecter();
 
+                                            // afficher message d'insertion
+                                            MessageBox.Show("Compte crée avec Succès");
+
+                                            // vider et remplir les zone de texte
+                                            txtNumeroCompte.Text = txtAgenceBanque.Text = txtBanque.Text = "";
+                                            remplirNumeroCompte();
+                                            remplirListCompte();
+                                            remplirAcceuil();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                        }
                                     }
-
-                                    // afficher message d'insertion
-                                    MessageBox.Show("Compte crée avec Succès");
-
-                                    // vider et remplir les zone de texte
-                                    txtNumeroCompte.Text = txtAgenceBanque.Text = txtBanque.Text = "";
-                                    remplirNumeroCompte();
-                                    remplirListCompte();
-                                    remplirAcceuil();
                                 }
                                 else
                                     errorProvider1.SetError(txtBanque,"cette Information est Obligatoire");
@@ -1560,30 +1597,30 @@ namespace GestionAffaire
             {
                 if (txtICEClient.Text != "")
                 {
-                    try
+                    if (IsClientExists(txtICEClient.Text) == false)
+                    {  
+                        // si ice de client n'est pas existe dans la base de donnees
+                        errorProvider1.SetError(txtICEClient, "Client n'est pas Existant");
+                    }
+                    else
                     {
-                        if (IsClientExists(txtICEClient.Text) == false)
-                        {  
-                            // si ice de client n'est pas existe dans la base de donnees
-                            errorProvider1.SetError(txtICEClient, "Client n'est pas Existant");
-                        }
-                        else
+                        // si ice de client est existe dans la base de donnees
+                        if (txtRaisonSocialClient.Text != "")
                         {
-                            // si ice de client est existe dans la base de donnees
-                            if (txtRaisonSocialClient.Text != "")
+                            if (IsRaisonSocialeClientExists(txtRaisonSocialClient.Text) == false)
                             {
-                                if (IsRaisonSocialeClientExists(txtRaisonSocialClient.Text) == false)
+                                // si raison sociale est deja existe dans la base de donnees
+                                try
                                 {
-                                    // si raison sociale est deja existe dans la base de donnees
                                     // ouvirteur la connection
-                                    con.Open();
+                                    connecter();
                                     cmd.CommandText = "update Client set raisonSociale=@rs where ICE=@ice";
                                     cmd.Parameters.AddWithValue("@rs", txtRaisonSocialClient.Text);
                                     cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
                                     cmd.ExecuteNonQuery();
                                     cmd.Parameters.Clear();
                                     //fermeture la connection
-                                    con.Close();
+                                    deConnecter();
 
                                     //afficher message de modification
                                     MessageBox.Show("Modification Avec Succès");
@@ -1593,16 +1630,17 @@ namespace GestionAffaire
                                     remplirListClient();
                                     RemplirIdClient();
                                 }
-                                else
-                                    errorProvider1.SetError(txtRaisonSocialClient, "Raison Sociale de Client est déjà Existant");
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                    deConnecter();
+                                }
                             }
                             else
-                                errorProvider1.SetError(txtRaisonSocialClient, "cette information est Obligatoire");
+                                errorProvider1.SetError(txtRaisonSocialClient, "Raison Sociale de Client est déjà Existant");
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        else
+                            errorProvider1.SetError(txtRaisonSocialClient, "cette information est Obligatoire");
                     }
                 }
                 else
@@ -1625,14 +1663,14 @@ namespace GestionAffaire
                             try
                             {
                                 // ouvriteur la connection
-                                con.Open();
+                                connecter();
                                 cmd.CommandText = "update Responsable set prenom=@prenom where nom=@nom";
                                 cmd.Parameters.AddWithValue("@prenom", txtPrenomRespo.Text);
                                 cmd.Parameters.AddWithValue("@nom", txtNomRespo.Text);
                                 cmd.ExecuteNonQuery();
                                 cmd.Parameters.Clear();
                                 // fermetteur la connection
-                                con.Close();
+                                deConnecter();
 
                                 // afficher message de modification
                                 MessageBox.Show("Modification Avec Succès");
@@ -1645,6 +1683,7 @@ namespace GestionAffaire
                             catch (Exception ex)
                             {
                                 MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                deConnecter();
                             }
                         }
                         else
@@ -1680,7 +1719,7 @@ namespace GestionAffaire
                                 {
 
                                     // ouvreteur la connection
-                                    con.Open();
+                                    connecter();
                                     cmd.CommandText = "update Personnel set nom=@nom, prenom=@prenom  where cin=@cin";
                                     cmd.Parameters.AddWithValue("@nom", txtNomPersonne.Text);
                                     cmd.Parameters.AddWithValue("@prenom", txtPrenomPresonne.Text);
@@ -1688,7 +1727,7 @@ namespace GestionAffaire
                                     cmd.ExecuteNonQuery();
                                     cmd.Parameters.Clear();
                                     //fermeture la connection
-                                    con.Close();
+                                    deConnecter();
 
                                     // afficher le message de modification
                                     MessageBox.Show("Modification Avec Succès");
@@ -1702,17 +1741,18 @@ namespace GestionAffaire
                                 catch (Exception ex)
                                 {
                                     MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                    deConnecter();
                                 }
                             }
+                        }
+                        else
+                        {
+                            if (txtNomPersonne.Text == "")
+                                errorProvider1.SetError(txtNomPersonne, "cette Information est Obligatoire");
+                            if (txtPrenomPresonne.Text == "")
+                                errorProvider1.SetError(txtPrenomPresonne, "cette Information est Obligatoire");
+                        }
                     }
-                    else
-                    {
-                        if (txtNomPersonne.Text == "")
-                            errorProvider1.SetError(txtNomPersonne, "cette Information est Obligatoire");
-                        if (txtPrenomPresonne.Text == "")
-                            errorProvider1.SetError(txtPrenomPresonne, "cette Information est Obligatoire");
-                    }
-                }
                 }
                 else
                     errorProvider1.SetError(txtNomPersonne, "cette information est Obligatoire");
@@ -1733,26 +1773,44 @@ namespace GestionAffaire
                         {
                             if (txtBanque.Text != "")
                             {
-                                try
+                                if (IsBanqueExists(txtBanque.Text))
                                 {
-                                    if (IsBanqueExists(txtBanque.Text))
+                                    // si la banque est existe dans la base de donnees
+
+                                    try
                                     {
-                                        // si la banque est existe dans la base de donnees
-                                        con.Open();
+                                        // ouvreteur la connection
+                                        connecter();
                                         cmd.CommandText = "update Compte set AgenceBanque=@agence ,Banque=@banque where numero=@num";
                                         cmd.Parameters.AddWithValue("@agence", txtAgenceBanque.Text);
                                         cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
                                         cmd.Parameters.AddWithValue("@num", txtNumeroCompte.Text);
                                         cmd.ExecuteNonQuery();
                                         cmd.Parameters.Clear();
-                                        con.Close();
-                                    }
-                                    else
-                                    {
-                                        // si la banque n'est pas existe dans la base de donnees
+                                        deConnecter();
 
+                                        // afficher le message de modification
+                                        MessageBox.Show("Modification Avec Succès");
+
+                                        // vider et remplir les zone de texte
+                                        txtNumeroCompte.Text = txtAgenceBanque.Text = txtBanque.Text = "";
+                                        remplirNumeroCompte();
+                                        remplirListCompte();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                        deConnecter();
+                                    }
+                                }
+                                else
+                                {
+                                    // si la banque n'est pas existe dans la base de donnees
+
+                                    try
+                                    {
                                         // ouvreteur la connection
-                                        con.Open();
+                                        connecter();
                                         cmd.CommandText = "insert into Banque values(@banque)";
                                         cmd.Parameters.AddWithValue("@banque", txtBanque.Text);
                                         cmd.ExecuteNonQuery();
@@ -1764,23 +1822,22 @@ namespace GestionAffaire
                                         cmd.ExecuteNonQuery();
 
                                         // fermeture la connection
-                                        con.Close();
+                                        deConnecter();
 
+                                        // afficher le message de modification
+                                        MessageBox.Show("Modification Avec Succès");
+
+                                        // vider et remplir les zone de texte
+                                        txtNumeroCompte.Text = txtAgenceBanque.Text = txtBanque.Text = "";
+                                        remplirNumeroCompte();
+                                        remplirListCompte();
                                     }
-
-                                    // afficher le message de modification
-                                    MessageBox.Show("Modification Avec Succès");
-
-                                    // vider et remplir les zone de texte
-                                    txtNumeroCompte.Text = txtAgenceBanque.Text = txtBanque.Text = "";
-                                    remplirNumeroCompte();
-                                    remplirListCompte();
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                        deConnecter();
+                                    }
                                 }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                                }
-
                             }
                             else
                                 errorProvider1.SetError(txtBanque, "cette Information est Obligatoire");
@@ -1802,7 +1859,7 @@ namespace GestionAffaire
             dt.Rows.Clear();
 
             // ouverteur la connection
-            con.Open();
+            connecter();
             cmd.CommandText = "select ICE,raisonSociale as 'Raison Sociale' from Client where ICE=@ice";
             cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
             da.SelectCommand = cmd;
@@ -1810,7 +1867,7 @@ namespace GestionAffaire
             cmd.Parameters.Clear();
 
             // fermeture la connection
-            con.Close();
+            deConnecter();
 
             // remplir la liste de client a partir de datatable dt
             ListClient.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -1826,16 +1883,16 @@ namespace GestionAffaire
             // instancer une datatable
             DataTable dt = new DataTable();
             dt.Rows.Clear();
-            
+
             // ouvreteur la connection
-            con.Open();
+            connecter();
             cmd.CommandText = "select Nom, Prenom, active from Responsable where nom=@nom";
             cmd.Parameters.AddWithValue("@nom", txtNomRespo.Text);
             da.SelectCommand = cmd;
             da.Fill(dt);
             cmd.Parameters.Clear();
             // fermeture la connection
-            con.Close();
+            deConnecter();
 
             // remplir la liste des chargé d'affaire a partir de datatable dt
             ListRespo.DataSource = dt;
@@ -1851,15 +1908,16 @@ namespace GestionAffaire
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
+            
             // ouverteur la connection
-            con.Open();
+            connecter();
             cmd.CommandText = "select CIN, Nom, Prenom, active from Personnel where cin=@cin";
             cmd.Parameters.AddWithValue("@cin", txtCinPersonne.Text);
             da.SelectCommand = cmd;
             da.Fill(dt);
             cmd.Parameters.Clear();
             // fermeture la connection
-            con.Close();
+            deConnecter();
 
             // remplir la liste des personnel a partir de datatable dt
             listPersonnel.DataSource = dt;
@@ -1877,7 +1935,7 @@ namespace GestionAffaire
             dt.Rows.Clear();
 
             // ouverteur la connection
-            con.Open();
+            connecter();
             cmd.CommandText = "select Numero,AgenceBanque as 'Agence',Banque, active from Compte where numero=@num";
             cmd.Parameters.AddWithValue("@num", txtNumeroCompte.Text);
             da.SelectCommand = cmd;
@@ -1885,7 +1943,7 @@ namespace GestionAffaire
             cmd.Parameters.Clear();
 
             // fermeture la connection
-            con.Close();
+            deConnecter();
 
             // remplir la list des compte a partir de datatable dt
             ListComptes.DataSource = dt;
@@ -1924,13 +1982,13 @@ namespace GestionAffaire
                                 try
                                 {
                                     // ouverteur la connection
-                                    con.Open();
+                                    connecter();
                                     cmd.CommandText = "delete Client where ICE=@ice";
                                     cmd.Parameters.AddWithValue("@ice", txtICEClient.Text);
                                     cmd.ExecuteNonQuery();
                                     cmd.Parameters.Clear();
                                     // fermeture la connection
-                                    con.Close();
+                                    deConnecter();
 
                                     // afficher le message de suppression
                                     MessageBox.Show("Suppression Avec Succès");
@@ -1944,6 +2002,7 @@ namespace GestionAffaire
                                 catch (Exception ex)
                                 {
                                     MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                    deConnecter();
                                 }
                             }
                         }
@@ -1986,30 +2045,37 @@ namespace GestionAffaire
                 {
                     errorProvider1.Dispose();
 
-                    // ouverteur la connection
-                    con.Open();
-                    if (Convert.ToBoolean(ListRespo.Rows[e.RowIndex].Cells[2].Value) == false)
+                    try
                     {
-                        cmd.CommandText = "update Responsable set active=1 where nom=@nom";
-                        cmd.Parameters.AddWithValue("@nom", ListRespo.Rows[e.RowIndex].Cells[0].Value);
-                        cmd.ExecuteNonQuery();
-                        cmd.Parameters.Clear();
-                    }
-                    else if (Convert.ToBoolean(ListRespo.Rows[e.RowIndex].Cells[2].Value) == true)
-                    {
-                        cmd.CommandText = "update Responsable set active=0 where nom=@nom";
-                        cmd.Parameters.AddWithValue("@nom", ListRespo.Rows[e.RowIndex].Cells[0].Value);
-                        cmd.ExecuteNonQuery();
-                        cmd.ExecuteNonQuery();
-                        cmd.Parameters.Clear();
-                    }
-                    // feremteur la connection
-                    con.Close();
+                        // ouverteur la connection
+                        connecter();
+                        if (Convert.ToBoolean(ListRespo.Rows[e.RowIndex].Cells[2].Value) == false)
+                        {
+                            cmd.CommandText = "update Responsable set active=1 where nom=@nom";
+                            cmd.Parameters.AddWithValue("@nom", ListRespo.Rows[e.RowIndex].Cells[0].Value);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
+                        else if (Convert.ToBoolean(ListRespo.Rows[e.RowIndex].Cells[2].Value) == true)
+                        {
+                            cmd.CommandText = "update Responsable set active=0 where nom=@nom";
+                            cmd.Parameters.AddWithValue("@nom", ListRespo.Rows[e.RowIndex].Cells[0].Value);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
+                        // feremteur la connection
+                        deConnecter();
 
-                    // remplir les zone de texte
-                    RemplirNomRespo();
-                    remplirBeneficaireNote();
-                    remplirAcceuil();
+                        // remplir les zone de texte
+                        RemplirNomRespo();
+                        remplirBeneficaireNote();
+                        remplirAcceuil();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        deConnecter();
+                    }
                 }
             }
         }
@@ -2021,29 +2087,37 @@ namespace GestionAffaire
                 {
                     errorProvider1.Dispose();
 
-                    // ouverteur la connection
-                    con.Open();
-                    if (Convert.ToBoolean(listPersonnel.Rows[e.RowIndex].Cells[3].Value) == false)
+                    try
                     {
-                        cmd.CommandText = "update Personnel set active=1 where cin=@cin";
-                        cmd.Parameters.AddWithValue("@cin", listPersonnel.Rows[e.RowIndex].Cells[0].Value);
-                        cmd.ExecuteNonQuery();
-                        cmd.Parameters.Clear();
-                    }
-                    else
-                    {
-                        cmd.CommandText = "update Personnel set active=0 where cin=@cin";
-                        cmd.Parameters.AddWithValue("@cin", listPersonnel.Rows[e.RowIndex].Cells[0].Value);
-                        cmd.ExecuteNonQuery();
-                        cmd.Parameters.Clear();
-                    }
-                    // fermeture la connection
-                    con.Close();
+                        // ouverteur la connection
+                        connecter();
+                        if (Convert.ToBoolean(listPersonnel.Rows[e.RowIndex].Cells[3].Value) == false)
+                        {
+                            cmd.CommandText = "update Personnel set active=1 where cin=@cin";
+                            cmd.Parameters.AddWithValue("@cin", listPersonnel.Rows[e.RowIndex].Cells[0].Value);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
+                        else
+                        {
+                            cmd.CommandText = "update Personnel set active=0 where cin=@cin";
+                            cmd.Parameters.AddWithValue("@cin", listPersonnel.Rows[e.RowIndex].Cells[0].Value);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
+                        // fermeture la connection
+                        deConnecter();
 
-                    // vider et remplir la connection
-                    remplirNomEmploye();
-                    remplirBeneficaireNote();
-                    remplirAcceuil();
+                        // vider et remplir la connection
+                        remplirNomEmploye();
+                        remplirBeneficaireNote();
+                        remplirAcceuil();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        deConnecter();
+                    }
                 }
             }
         }
@@ -2055,28 +2129,36 @@ namespace GestionAffaire
                 {
                     errorProvider1.Dispose();
 
-                    // ouverteur la connection
-                    con.Open();
-                    if (Convert.ToBoolean(ListComptes.Rows[e.RowIndex].Cells[3].Value) == false)
+                    try
                     {
-                        cmd.CommandText = "update Compte set active=1 where numero=@num";
-                        cmd.Parameters.AddWithValue("@num", ListComptes.Rows[e.RowIndex].Cells[0].Value);
-                        cmd.ExecuteNonQuery();
-                        cmd.Parameters.Clear();
-                    }
-                    else
-                    {
-                        cmd.CommandText = "update Compte set active=0 where numero=@num";
-                        cmd.Parameters.AddWithValue("@num", ListComptes.Rows[e.RowIndex].Cells[0].Value);
-                        cmd.ExecuteNonQuery();
-                        cmd.Parameters.Clear();
-                    }
-                    // fermeture la connection
-                    con.Close();
+                        // ouverteur la connection
+                        connecter();
+                        if (Convert.ToBoolean(ListComptes.Rows[e.RowIndex].Cells[3].Value) == false)
+                        {
+                            cmd.CommandText = "update Compte set active=1 where numero=@num";
+                            cmd.Parameters.AddWithValue("@num", ListComptes.Rows[e.RowIndex].Cells[0].Value);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
+                        else
+                        {
+                            cmd.CommandText = "update Compte set active=0 where numero=@num";
+                            cmd.Parameters.AddWithValue("@num", ListComptes.Rows[e.RowIndex].Cells[0].Value);
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                        }
+                        // fermeture la connection
+                        deConnecter();
 
-                    // vider et remplir la connection
-                    remplirNumeroCompte();
-                    remplirAcceuil();
+                        // vider et remplir la connection
+                        remplirNumeroCompte();
+                        remplirAcceuil();
+                    }
+                    catch (Exception ex)
+                    {
+                        string a = ex.ToString();
+                        deConnecter();
+                    }
                 }
             }
         }
@@ -2092,34 +2174,41 @@ namespace GestionAffaire
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
-            // ouverteur la connection
-            con.Open();
-            cmd.CommandText = "select Numero,raisonSociale as 'Client',Responsable as 'Chargé d''affaire',NoteFrais as 'Note de Frais',NbrJourEstimer as 'Nombre de jours Estimé',NbrJourConsommer as 'Nombre de jours Consommés' from Affaires inner join Client on Affaires.Client=Client.ICE where Numero='" + cmbNumeroAff.Text + "'";
-            da.SelectCommand = cmd;
-            da.Fill(dt);
-            // fermeture la connection
-            con.Close();
-
-            // remplir la liste des affaire a partir de datatable dt
-            ListAff.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            ListAff.DataSource = dt;
-            for (int i = 0; i < ListAff.Rows.Count - 1; i++)
+            try
             {
-                if (ListAff.Rows[i].Cells[5].Value.ToString() == "")
-                    ListAff.Rows[i].Cells[5].Value = 0;
-            }
+                // ouverteur la connection
+                connecter();
+                cmd.CommandText = "select Numero,raisonSociale as 'Client',Responsable as 'Chargé d''affaire',NoteFrais as 'Note de Frais',NbrJourEstimer as 'Nombre de jours Estimé',NbrJourConsommer as 'Nombre de jours Consommés' from Affaires inner join Client on Affaires.Client=Client.ICE where Numero='" + cmbNumeroAff.Text + "'";
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+                // fermeture la connection
+                deConnecter();
 
-            // afficher les informations d'affaire dans les zone de texte
-            cmbClientAff.Text = dt.Rows[0][1].ToString();
-            cmbResponsableAff.Text = dt.Rows[0][2].ToString();
-            txtNbrJourAffaire.Value = decimal.Parse(dt.Rows[0][4].ToString());
+                // remplir la liste des affaire a partir de datatable dt
+                ListAff.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                ListAff.DataSource = dt;
+                for (int i = 0; i < ListAff.Rows.Count - 1; i++)
+                {
+                    if (ListAff.Rows[i].Cells[5].Value.ToString() == "")
+                        ListAff.Rows[i].Cells[5].Value = 0;
+                }
+
+                // afficher les informations d'affaire dans les zone de texte
+                cmbClientAff.Text = dt.Rows[0][1].ToString();
+                cmbResponsableAff.Text = dt.Rows[0][2].ToString();
+                txtNbrJourAffaire.Value = decimal.Parse(dt.Rows[0][4].ToString());
+            }
+            catch (Exception ex)
+            {
+                string a = ex.ToString();
+                deConnecter();
+            }
         }
         private void ListAff_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            errorProvider1.Dispose();
             try
             {
-                errorProvider1.Dispose();
-
                 if(e.RowIndex >= 0 && e.RowIndex < ListAff.Rows.Count - 1)
                 {
                     // instancer une datatable dt
@@ -2127,12 +2216,12 @@ namespace GestionAffaire
                     dt.Rows.Clear();
 
                     // ouverteur la connection
-                    con.Open();
+                    connecter();
                     cmd.CommandText = "select Numero,raisonSociale as 'Client',Responsable as 'Chargé d''affaire',NoteFrais as 'Note de Frais',NbrJourEstimer as 'Nombre de Jours Estimé',NbrJourConsommer as 'Nombre de Jours Consommés' from Affaires inner join Client on Affaires.Client=Client.ICE where Numero='" + ListAff.Rows[e.RowIndex].Cells[0].Value.ToString() + "'";
                     da.SelectCommand = cmd;
                     da.Fill(dt);
                     // feremteur la connection
-                    con.Close();
+                    deConnecter();
 
                     // afficher les information d'affaire dans les zone de texte
                     cmbNumeroAff.Text = dt.Rows[0][0].ToString();
@@ -2147,6 +2236,7 @@ namespace GestionAffaire
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                deConnecter();
             }
         }
         private void button3_Click(object sender, EventArgs e)
@@ -2180,7 +2270,7 @@ namespace GestionAffaire
                                 try
                                 {
                                     // ouverteur la connection
-                                    con.Open();
+                                    connecter();
                                     cmd.CommandText = "select ICE from Client where raisonSociale='" + cmbClientAff.Text + "'";
                                     string ICE = cmd.ExecuteScalar().ToString();
 
@@ -2192,7 +2282,7 @@ namespace GestionAffaire
                                                                 int.Parse(txtNbrJourAffaire.Value.ToString()) + "')";
                                     cmd.ExecuteNonQuery();
                                     // feremteur la connection
-                                    con.Close();
+                                    deConnecter();
                                     
                                     // afficher message d'inssertion
                                     MessageBox.Show("Affaire Ajouter Avec Succès");
@@ -2210,6 +2300,7 @@ namespace GestionAffaire
                                 catch (Exception ex)
                                 {
                                     MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                    deConnecter();
                                 }
                             }
                             else
@@ -2250,7 +2341,7 @@ namespace GestionAffaire
                                 try
                                 {
                                     // ouverteur la connection
-                                    con.Open();
+                                    connecter();
                                     cmd.CommandText = "select ICE from Client where raisonSociale='" + cmbClientAff.Text + "'";
                                     string ICE = cmd.ExecuteScalar().ToString();
                                     cmd.Parameters.Clear();
@@ -2260,7 +2351,7 @@ namespace GestionAffaire
                                                                         + "' where Numero='" + cmbNumeroAff.Text + "'";
                                     cmd.ExecuteNonQuery();
                                     // fermeture la connection
-                                    con.Close();
+                                    deConnecter();
 
                                     // afficher message d'inssertion
                                     MessageBox.Show("Modification Avec Succès");
@@ -2278,6 +2369,7 @@ namespace GestionAffaire
                                 catch (Exception ex)
                                 {
                                     MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                    deConnecter();
                                 }
                             }
                             else
@@ -2320,11 +2412,11 @@ namespace GestionAffaire
                             try
                             {
                                 // ouverteur la connection
-                                con.Open();
+                                connecter();
                                 cmd.CommandText = "delete Affaires where Numero='" + cmbNumeroAff.Text + "'";
                                 cmd.ExecuteNonQuery();
                                 // fermeture la connection
-                                con.Close();
+                                deConnecter();
 
                                 //afficher message de suppression
                                 MessageBox.Show("Suppression Avec Succès");
@@ -2340,6 +2432,7 @@ namespace GestionAffaire
                             catch (Exception ex)
                             {
                                 MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                deConnecter();
                             }
                         }
                     }
@@ -2366,7 +2459,7 @@ namespace GestionAffaire
 
                     try
                     {
-                        con.Open();
+                        connecter();
                         cmd.CommandText = "select * from Affaires where Numero='" + cmbNumeroAff.Text + "'";
                         da.SelectCommand = cmd;
                         da.Fill(ds, "Affaires");
@@ -2406,7 +2499,7 @@ namespace GestionAffaire
                             }
                         }
 
-                        con.Close();
+                        deConnecter();
 
 
                         if (ds.Tables["Affaires"].Rows[0][3].ToString() != "")
@@ -2443,6 +2536,7 @@ namespace GestionAffaire
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        deConnecter();
                     }
                 }
                 else
@@ -2469,7 +2563,7 @@ namespace GestionAffaire
             try
             {
                 // ouverteur la connection
-                con.Open();
+                connecter();
                 cmd.CommandText = "select Numero,affaire,cast(totalFrais as varchar) as 'totalFrais',date,respo,personnel from NoteFrais where Numero='" + int.Parse(cmbNumeroNote.Text) + "'";
                 da.SelectCommand = cmd;
                 da.Fill(dt2);
@@ -2494,7 +2588,7 @@ namespace GestionAffaire
                 da.SelectCommand = cmd;
                 da.Fill(dt);
                 // fermeture la connection
-                con.Close();
+                deConnecter();
 
 
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -2514,6 +2608,7 @@ namespace GestionAffaire
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                deConnecter();
             }
         }
         private void cmbTypeNoteAjouter_SelectedIndexChanged(object sender, EventArgs e)
@@ -2558,81 +2653,89 @@ namespace GestionAffaire
                         {
                             if (cmbRespoNote.Text != "")
                             {
-                                // ouverteur la connection
-                                con.Open();
-                                if (radioButton5.Checked == true)
+                                try
                                 {
-                                    if (cmbNumAffaireNote.Text != "")
+                                    // ouverteur la connection
+                                    connecter();
+                                    if (radioButton5.Checked == true)
                                     {
-                                        cmd.CommandText = "insert into NoteFrais(Numero,affaire,date,respo) values('" +
-                                                                                        Convert.ToInt32(txtNumeroNote.Text) + "','" +
-                                                                                        cmbNumAffaireNote.Text + "','" +
-                                                                                        Convert.ToDateTime(txtDateNote.Text) + "','" +
-                                                                                        cmbRespoNote.Text + "')";
+                                        if (cmbNumAffaireNote.Text != "")
+                                        {
+                                            cmd.CommandText = "insert into NoteFrais(Numero,affaire,date,respo) values('" +
+                                                                                            Convert.ToInt32(txtNumeroNote.Text) + "','" +
+                                                                                            cmbNumAffaireNote.Text + "','" +
+                                                                                            Convert.ToDateTime(txtDateNote.Text) + "','" +
+                                                                                            cmbRespoNote.Text + "')";
+                                        }
+                                        else
+                                        {
+                                            cmd.CommandText = "insert into NoteFrais(Numero,date,respo) values('" +
+                                                                                            Convert.ToInt32(txtNumeroNote.Text) + "','" +
+                                                                                            Convert.ToDateTime(txtDateNote.Text) + "','" +
+                                                                                            cmbRespoNote.Text + "')";
+                                        }
+                                        cmd.ExecuteNonQuery();
                                     }
                                     else
                                     {
-                                        cmd.CommandText = "insert into NoteFrais(Numero,date,respo) values('" +
-                                                                                        Convert.ToInt32(txtNumeroNote.Text) + "','" +
-                                                                                        Convert.ToDateTime(txtDateNote.Text) + "','" +
-                                                                                        cmbRespoNote.Text + "')";
+                                        cmd.CommandText = "select cin from Personnel where nom='" + cmbRespoNote.Text + "'";
+                                        string cin = cmd.ExecuteScalar().ToString();
+                                        if (cmbNumAffaireNote.Text != "")
+                                        {
+                                            cmd.CommandText = "insert into NoteFrais(Numero,affaire,date,personnel) values('" +
+                                                                                            Convert.ToInt32(txtNumeroNote.Text) + "','" +
+                                                                                            cmbNumAffaireNote.Text + "','" +
+                                                                                            Convert.ToDateTime(txtDateNote.Text) + "','" +
+                                                                                            cin + "')";
+                                        }
+                                        else
+                                        {
+                                            cmd.CommandText = "insert into NoteFrais(Numero,date,personnel) values('" +
+                                                                                            Convert.ToInt32(txtNumeroNote.Text) + "','" +
+                                                                                            Convert.ToDateTime(txtDateNote.Text) + "','" +
+                                                                                            cin + "')";
+                                        }
+                                        cmd.ExecuteNonQuery();
                                     }
-                                    cmd.ExecuteNonQuery();
-                                }
-                                else
-                                {
-                                    cmd.CommandText = "select cin from Personnel where nom='"+ cmbRespoNote.Text + "'";
-                                    string cin = cmd.ExecuteScalar().ToString();
-                                    if (cmbNumAffaireNote.Text != "")
+
+                                    for (int i = 0; i < listFraisNote.Rows.Count - 1; i++)
                                     {
-                                        cmd.CommandText = "insert into NoteFrais(Numero,affaire,date,personnel) values('" +
-                                                                                        Convert.ToInt32(txtNumeroNote.Text) + "','" +
-                                                                                        cmbNumAffaireNote.Text + "','" +
-                                                                                        Convert.ToDateTime(txtDateNote.Text) + "','" +
-                                                                                        cin + "')";
+                                        cmd.Parameters.Clear();
+                                        cmd.CommandText = "insert into Frais(numero,Type,PiecesComptables,date,frais,noteFrais) values('" +
+                                                                                                                int.Parse(listFraisNote.Rows[i].Cells[0].Value.ToString()) + "','" +
+                                                                                                                listFraisNote.Rows[i].Cells[1].Value.ToString() + "','" +
+                                                                                                                listFraisNote.Rows[i].Cells[2].Value.ToString() + "','" +
+                                                                                                                DateTime.Parse(listFraisNote.Rows[i].Cells[3].Value.ToString()) + "','" +
+                                                                                                                double.Parse(listFraisNote.Rows[i].Cells[4].Value.ToString()) + "','" +
+                                                                                                                int.Parse(txtNumeroNote.Text) + "')";
+                                        cmd.ExecuteNonQuery();
                                     }
-                                    else
-                                    {
-                                        cmd.CommandText = "insert into NoteFrais(Numero,date,personnel) values('" +
-                                                                                        Convert.ToInt32(txtNumeroNote.Text) + "','" +
-                                                                                        Convert.ToDateTime(txtDateNote.Text) + "','" +
-                                                                                        cin + "')";
-                                    }
-                                    cmd.ExecuteNonQuery();
-                                }
+                                    // fermeture la connection
+                                    deConnecter();
 
-                                for (int i = 0; i < listFraisNote.Rows.Count - 1; i++)
+                                    // vider et remplir la connection
+                                    listFraisNote.Rows.Clear();
+                                    remplirTypeNote();
+                                    remplirPCNote();
+                                    RemplirNumeroAffaire();
+                                    remplirListAffaire();
+                                    RemplirNomRespo();
+                                    NumeroNote();
+                                    remplirBeneficaireNote();
+                                    txtDateFrais.Text = "";
+                                    txtDateNote.Text = "";
+                                    txtFraisFrais.Text = "0";
+                                    txtRespoNote.Text = "";
+
+                                    remplirNumeroNote();
+                                    remplirListFrais();
+                                    remplirAcceuil();
+                                }
+                                catch (Exception ex)
                                 {
-                                    cmd.Parameters.Clear();
-                                    cmd.CommandText = "insert into Frais(numero,Type,PiecesComptables,date,frais,noteFrais) values('" +
-                                                                                                            int.Parse(listFraisNote.Rows[i].Cells[0].Value.ToString()) + "','" +
-                                                                                                            listFraisNote.Rows[i].Cells[1].Value.ToString() + "','" +
-                                                                                                            listFraisNote.Rows[i].Cells[2].Value.ToString() + "','" +
-                                                                                                            DateTime.Parse(listFraisNote.Rows[i].Cells[3].Value.ToString()) + "','" +
-                                                                                                            double.Parse(listFraisNote.Rows[i].Cells[4].Value.ToString()) + "','" +
-                                                                                                            int.Parse(txtNumeroNote.Text) + "')";
-                                    cmd.ExecuteNonQuery();
+                                    MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                    deConnecter();
                                 }
-                                // fermeture la connection
-                                con.Close();
-
-                                // vider et remplir la connection
-                                listFraisNote.Rows.Clear();
-                                remplirTypeNote();
-                                remplirPCNote();
-                                RemplirNumeroAffaire();
-                                remplirListAffaire();
-                                RemplirNomRespo();
-                                NumeroNote();
-                                remplirBeneficaireNote();
-                                txtDateFrais.Text = "";
-                                txtDateNote.Text = "";
-                                txtFraisFrais.Text = "0";
-                                txtRespoNote.Text = "";
-
-                                remplirNumeroNote();
-                                remplirListFrais();
-                                remplirAcceuil();
                             }
                             else
                                 errorProvider1.SetError(cmbRespoNote, "cette information est Obligatoire");
@@ -2640,6 +2743,7 @@ namespace GestionAffaire
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                            deConnecter();
                         }
                     }
                     else
@@ -2662,7 +2766,7 @@ namespace GestionAffaire
                             {
                                 // si le frais de note n'est pas deja existe dans la base de donnees
                                 // ouverteur la connection
-                                con.Open();
+                                connecter();
                                 cmd.CommandText = "delete Frais where numero='" +
                                         int.Parse(listFraisNote.Rows[i].Cells[0].Value.ToString()) +
                                         "' and noteFrais='" +
@@ -2678,7 +2782,7 @@ namespace GestionAffaire
                                                             int.Parse(cmbNumeroNote.Text) + "')";
                                 cmd.ExecuteNonQuery();
                                 // fermeture la connection
-                                con.Close();
+                                deConnecter();
                             }
                         }
 
@@ -2701,6 +2805,7 @@ namespace GestionAffaire
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        deConnecter();
                     }
                 }
                 else
@@ -2721,7 +2826,7 @@ namespace GestionAffaire
                         try
                         {
                             // ouverteur la connection
-                            con.Open();
+                            connecter();
                             cmd.CommandText = "select numero from Frais where noteFrais='" + int.Parse(cmbNumeroNote.Text) + "'";
                             da.SelectCommand = cmd;
                             DataTable dt = new DataTable();
@@ -2736,7 +2841,7 @@ namespace GestionAffaire
                             cmd.CommandText = "delete NoteFrais where Numero='" + int.Parse(cmbNumeroNote.Text) + "'";
                             cmd.ExecuteNonQuery();
                             // fermeture la connection
-                            con.Close();
+                            deConnecter();
 
 
                             //afficher message de suppression
@@ -2762,6 +2867,7 @@ namespace GestionAffaire
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                            deConnecter();
                         }
                     }
 
@@ -2807,7 +2913,7 @@ namespace GestionAffaire
                     try
                     {
                         // ouverteur la connection
-                        con.Open();
+                        connecter();
                         cmd.CommandText = "select * from NoteFrais where Numero='" + int.Parse(cmbNumeroNote.Text) + "'";
                         da.SelectCommand = cmd;
                         da.Fill(ds, "NoteFrais");
@@ -2818,7 +2924,7 @@ namespace GestionAffaire
                         da.SelectCommand = cmd;
                         da.Fill(ds, "Frais");
                         // fermeture la connection                        
-                        con.Close();
+                        deConnecter();
 
                         CrystalReport2 cr = new CrystalReport2();
                         cr.Database.Tables["NoteFrais"].SetDataSource(ds.Tables[0]);
@@ -2837,6 +2943,7 @@ namespace GestionAffaire
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        deConnecter();
                     }
                 }
                 else
@@ -3029,7 +3136,7 @@ namespace GestionAffaire
                             {
                                 int num = int.Parse(listFraisNote.Rows[e.RowIndex].Cells[0].Value.ToString());
                                 // ouverture la connection 
-                                con.Open();
+                                connecter();
                                 cmd.CommandText = "delete Frais where Numero='" + num + "' and noteFrais='" + int.Parse(cmbNumeroNote.Text) + "'";
                                 cmd.ExecuteNonQuery();
                                 listFraisNote.Rows.RemoveAt(e.RowIndex);
@@ -3040,9 +3147,9 @@ namespace GestionAffaire
                                                                         "' and noteFrais='" + int.Parse(cmbNumeroNote.Text) + "'";
                                     cmd.ExecuteNonQuery();
                                 }
-                                con.Close();
+                                deConnecter();
                                 numeroFrais();
-                                con.Open();
+                                connecter();
                                 for (int i = 0; i < listFraisNote.Rows.Count - 1; i++)
                                 {
                                     cmd.Parameters.Clear();
@@ -3055,7 +3162,7 @@ namespace GestionAffaire
                                                                 int.Parse(cmbNumeroNote.Text) + "')";
                                     cmd.ExecuteNonQuery();
                                 }
-                                con.Close();
+                                deConnecter();
                                 remplirListFrais();
                                 remplirAcceuil();
 
@@ -3063,6 +3170,7 @@ namespace GestionAffaire
                             catch (Exception ex)
                             {
                                 MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                deConnecter();
                             }
                         }
                     }
@@ -3089,69 +3197,77 @@ namespace GestionAffaire
 
             if (DateTime.Parse(txtDateFinFraisRecheNote.Value.ToString()) >= DateTime.Parse(txtDateDebutFraisRecheNote.Value.ToString()))
             {
-                con.Open();
-                if (cmbTypeFraisRecheNote.Text != "" && cmbPCFraisRecheNote.Text != "")
+                try
                 {
-                    cmd.CommandText = "select Numero,Type,PiecesComptables as 'Piece Comptable',Frais,Date,noteFrais as 'Note de Frais' from Frais where Type='"
-                                                        + cmbTypeFraisRecheNote.Text
-                                                        + "' and PiecesComptables='" + cmbPCFraisRecheNote.Text
-                                                        + "' and date between '"
-                                                            + DateTime.Parse(txtDateDebutFraisRecheNote.Text)
-                                                            + "' and '"
-                                                            + DateTime.Parse(txtDateFinFraisRecheNote.Text)
-                                                        + "' and frais between '"
-                                                            + double.Parse(txtMinFraisFraisRecheNote.Value.ToString())
-                                                            + "' and '"
-                                                            + double.Parse(txtMaxFraisFraisRecheNote.Value.ToString()) + "'";
-                }
-                else if (cmbTypeFraisRecheNote.Text != "")
-                {
-                    cmd.CommandText = "select Numero,Type,PiecesComptables as 'Piece Comptable',Frais,Date,noteFrais as 'Note de Frais' from Frais where Type='"
-                                                        + cmbTypeFraisRecheNote.Text
-                                                        + "' and date between '"
-                                                            + DateTime.Parse(txtDateDebutFraisRecheNote.Text)
-                                                            + "' and '"
-                                                            + DateTime.Parse(txtDateFinFraisRecheNote.Text)
-                                                        + "' and frais between '"
-                                                            + double.Parse(txtMinFraisFraisRecheNote.Value.ToString())
-                                                            + "' and '"
-                                                            + double.Parse(txtMaxFraisFraisRecheNote.Value.ToString()) + "'";
-                }
-                else if (cmbPCFraisRecheNote.Text != "")
-                {
-                    cmd.CommandText = "select Numero,Type,PiecesComptables as 'Piece Comptable',Frais,Date,noteFrais as 'Note de Frais' from Frais where PiecesComptables='"
-                                                        + cmbPCFraisRecheNote.Text
-                                                        + "' and date between '"
-                                                            + DateTime.Parse(txtDateDebutFraisRecheNote.Text)
-                                                            + "' and '"
-                                                            + DateTime.Parse(txtDateFinFraisRecheNote.Text)
-                                                        + "' and frais between '"
-                                                            + double.Parse(txtMinFraisFraisRecheNote.Value.ToString())
-                                                            + "' and '"
-                                                            + double.Parse(txtMaxFraisFraisRecheNote.Value.ToString()) + "'";
-                }
-                else
-                {
-                    cmd.CommandText = "select Numero,Type,PiecesComptables as 'Piece Comptable',Frais,Date,noteFrais as 'Note de Frais' from Frais where date between '"
-                                                            + DateTime.Parse(txtDateDebutFraisRecheNote.Text)
-                                                            + "' and '"
-                                                            + DateTime.Parse(txtDateFinFraisRecheNote.Text)
-                                                        + "' and frais between '"
-                                                            + double.Parse(txtMinFraisFraisRecheNote.Value.ToString())
-                                                            + "' and '"
-                                                            + double.Parse(txtMaxFraisFraisRecheNote.Value.ToString()) + "'";
-                }
-                da.SelectCommand = cmd;
-                da.Fill(dt);
-                con.Close();
+                    connecter();
+                    if (cmbTypeFraisRecheNote.Text != "" && cmbPCFraisRecheNote.Text != "")
+                    {
+                        cmd.CommandText = "select Numero,Type,PiecesComptables as 'Piece Comptable',Frais,Date,noteFrais as 'Note de Frais' from Frais where Type='"
+                                                            + cmbTypeFraisRecheNote.Text
+                                                            + "' and PiecesComptables='" + cmbPCFraisRecheNote.Text
+                                                            + "' and date between '"
+                                                                + DateTime.Parse(txtDateDebutFraisRecheNote.Text)
+                                                                + "' and '"
+                                                                + DateTime.Parse(txtDateFinFraisRecheNote.Text)
+                                                            + "' and frais between '"
+                                                                + double.Parse(txtMinFraisFraisRecheNote.Value.ToString())
+                                                                + "' and '"
+                                                                + double.Parse(txtMaxFraisFraisRecheNote.Value.ToString()) + "'";
+                    }
+                    else if (cmbTypeFraisRecheNote.Text != "")
+                    {
+                        cmd.CommandText = "select Numero,Type,PiecesComptables as 'Piece Comptable',Frais,Date,noteFrais as 'Note de Frais' from Frais where Type='"
+                                                            + cmbTypeFraisRecheNote.Text
+                                                            + "' and date between '"
+                                                                + DateTime.Parse(txtDateDebutFraisRecheNote.Text)
+                                                                + "' and '"
+                                                                + DateTime.Parse(txtDateFinFraisRecheNote.Text)
+                                                            + "' and frais between '"
+                                                                + double.Parse(txtMinFraisFraisRecheNote.Value.ToString())
+                                                                + "' and '"
+                                                                + double.Parse(txtMaxFraisFraisRecheNote.Value.ToString()) + "'";
+                    }
+                    else if (cmbPCFraisRecheNote.Text != "")
+                    {
+                        cmd.CommandText = "select Numero,Type,PiecesComptables as 'Piece Comptable',Frais,Date,noteFrais as 'Note de Frais' from Frais where PiecesComptables='"
+                                                            + cmbPCFraisRecheNote.Text
+                                                            + "' and date between '"
+                                                                + DateTime.Parse(txtDateDebutFraisRecheNote.Text)
+                                                                + "' and '"
+                                                                + DateTime.Parse(txtDateFinFraisRecheNote.Text)
+                                                            + "' and frais between '"
+                                                                + double.Parse(txtMinFraisFraisRecheNote.Value.ToString())
+                                                                + "' and '"
+                                                                + double.Parse(txtMaxFraisFraisRecheNote.Value.ToString()) + "'";
+                    }
+                    else
+                    {
+                        cmd.CommandText = "select Numero,Type,PiecesComptables as 'Piece Comptable',Frais,Date,noteFrais as 'Note de Frais' from Frais where date between '"
+                                                                + DateTime.Parse(txtDateDebutFraisRecheNote.Text)
+                                                                + "' and '"
+                                                                + DateTime.Parse(txtDateFinFraisRecheNote.Text)
+                                                            + "' and frais between '"
+                                                                + double.Parse(txtMinFraisFraisRecheNote.Value.ToString())
+                                                                + "' and '"
+                                                                + double.Parse(txtMaxFraisFraisRecheNote.Value.ToString()) + "'";
+                    }
+                    da.SelectCommand = cmd;
+                    da.Fill(dt);
+                    deConnecter();
 
-                if (dt.Rows != null)
-                {
-                    ListRechercheFraisNote.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                    ListRechercheFraisNote.DataSource = dt;
+                    if (dt.Rows != null)
+                    {
+                        ListRechercheFraisNote.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                        ListRechercheFraisNote.DataSource = dt;
+                    }
+                    else
+                        MessageBox.Show("Il n'y a pas de Frais entre cette Date");
                 }
-                else
-                    MessageBox.Show("Il n'y a pas de Frais entre cette Date");
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    deConnecter();
+                }
             }
             else
                 errorProvider1.SetError(btnRechercheFraisNote, "la Date Début il doit etre Supérieur ou égal Date Fin");
@@ -3205,44 +3321,50 @@ namespace GestionAffaire
             dt.Rows.Clear();
             dt2.Rows.Clear();
 
-            
-            con.Open();
-            cmd.CommandText = "select numero as 'Numero', respo as 'Chargé d''affaire',dateDebut as 'Date Debut',dateFin as 'Date Fin',NbrJour as 'Nombre de Jours',lieuDepart as 'Lieu Départ',lieuArriver as 'Lieu Arrivé',nbrPersonne as 'Nombre de Personne',affaire as 'Affaire' from Mission where numero='" + int.Parse(cmbNumeroMission.Text) + "'";
-            da.SelectCommand = cmd;
-            da.Fill(dt);
-
-            cmd.Parameters.Clear();
-
-            cmd.CommandText = "select personnel,nom from DetailMission inner join Personnel on personnel=cin where mission='" + int.Parse(cmbNumeroMission.Text) + "'";
-            da.SelectCommand = cmd;
-            da.Fill(dt2);
-            con.Close();
-
-
-            cmbRespoMission.Text = dt.Rows[0][1].ToString();
-            txtDateDebutMission.Text = dt.Rows[0][2].ToString();
-            txtDateFinMission.Text = dt.Rows[0][3].ToString();
-            txtLieuDepartMission.Text = dt.Rows[0][5].ToString();
-            txtLieuArriveMission.Text = dt.Rows[0][6].ToString();
-            cmbNumAffMission.SelectedItem = dt.Rows[0][8].ToString();
-
-
-
-            ListMission.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            ListMission.DataSource = dt;
-
-            listeEmployeOrdre.Items.Clear();
-            for (int i = 0; i < dt2.Rows.Count; i++)
+            try
             {
-                listeEmployeOrdre.Items.Add(dt2.Rows[i][1].ToString());
+                connecter();
+                cmd.CommandText = "select numero as 'Numero', respo as 'Chargé d''affaire',dateDebut as 'Date Debut',dateFin as 'Date Fin',NbrJour as 'Nombre de Jours',lieuDepart as 'Lieu Départ',lieuArriver as 'Lieu Arrivé',nbrPersonne as 'Nombre de Personne',affaire as 'Affaire' from Mission where numero='" + int.Parse(cmbNumeroMission.Text) + "'";
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+
+                cmd.Parameters.Clear();
+
+                cmd.CommandText = "select personnel,nom from DetailMission inner join Personnel on personnel=cin where mission='" + int.Parse(cmbNumeroMission.Text) + "'";
+                da.SelectCommand = cmd;
+                da.Fill(dt2);
+                deConnecter();
+
+
+                cmbRespoMission.Text = dt.Rows[0][1].ToString();
+                txtDateDebutMission.Text = dt.Rows[0][2].ToString();
+                txtDateFinMission.Text = dt.Rows[0][3].ToString();
+                txtLieuDepartMission.Text = dt.Rows[0][5].ToString();
+                txtLieuArriveMission.Text = dt.Rows[0][6].ToString();
+                cmbNumAffMission.SelectedItem = dt.Rows[0][8].ToString();
+
+
+
+                ListMission.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                ListMission.DataSource = dt;
+
+                listeEmployeOrdre.Items.Clear();
+                for (int i = 0; i < dt2.Rows.Count; i++)
+                {
+                    listeEmployeOrdre.Items.Add(dt2.Rows[i][1].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                deConnecter();
             }
         }
         private void ListMission_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            errorProvider1.Dispose();
             try
             {
-                errorProvider1.Dispose();
-
                 if (e.RowIndex >= 0 && e.RowIndex < ListMission.Rows.Count - 1)
                 {
                     DataTable dt = new DataTable();
@@ -3251,7 +3373,7 @@ namespace GestionAffaire
                     dt.Rows.Clear();
                     dt2.Rows.Clear();
 
-                    con.Open();
+                    connecter();
                     cmd.CommandText = "select numero as 'Numero', respo as 'Chargé d''affaire',dateDebut as 'Date Debut',dateFin as 'Date Fin',NbrJour as 'Nombre de Jours',lieuDepart as 'Lieu Départ',lieuArriver as 'Lieu Arrivé',nbrPersonne as 'Number de Personne',affaire as 'Affaire' from Mission where numero='" + int.Parse(ListMission.Rows[e.RowIndex].Cells[0].Value.ToString()) + "'";
                     da.SelectCommand = cmd;
                     da.Fill(dt);
@@ -3261,7 +3383,7 @@ namespace GestionAffaire
                     cmd.CommandText = "select personnel,nom from DetailMission inner join Personnel on cin=personnel where mission='" + int.Parse(ListMission.Rows[e.RowIndex].Cells[0].Value.ToString()) + "'";
                     da.SelectCommand = cmd;
                     da.Fill(dt2);
-                    con.Close();
+                    deConnecter();
 
                     cmbNumeroMission.Text = dt.Rows[0][0].ToString();
                     cmbRespoMission.Text = dt.Rows[0][1].ToString();
@@ -3283,6 +3405,7 @@ namespace GestionAffaire
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                deConnecter();
             }
         }
         private void btnValiderMission_Click_1(object sender, EventArgs e)
@@ -3299,7 +3422,7 @@ namespace GestionAffaire
                             MessageBox.Show("pour Valider une Ordre de Mission il doit trouvez une Personne", "Note", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
                         else
                         {
-                            con.Open();
+                            connecter();
                             if (cmbRespoMission.Text != "" && listeEmployeOrdre.Items.Count == 0)
                             {
                                 cmd.CommandText = "insert into Mission(dateDebut,dateFin,lieuDepart,lieuArriver,affaire,respo,nbrPersonne) values('" +
@@ -3357,7 +3480,7 @@ namespace GestionAffaire
 
                             if (nbrJourC > nbrJourE)
                                 MessageBox.Show("Nombre de Jours de Mission Dépasse le Nombre de Jours Estimé pour l'affaire", "Note", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            con.Close();
+                            deConnecter();
 
 
                             remplirNumeroMission();
@@ -3375,6 +3498,7 @@ namespace GestionAffaire
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        deConnecter();
                     }
                 }
                 else
@@ -3413,7 +3537,7 @@ namespace GestionAffaire
                                     MessageBox.Show("pour Valider une Ordre de Mission il doit trouvez une Personne", "Note", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
                                 else
                                 {
-                                    con.Open();
+                                    connecter();
                                     if (cmbRespoMission.Text != "" && listeEmployeOrdre.Items.Count == 0)
                                     {
                                         cmd.CommandText = "update Mission set dateDebut='" + DateTime.Parse(txtDateDebutMission.Text) +
@@ -3446,31 +3570,31 @@ namespace GestionAffaire
                                                                 "' where numero='" + int.Parse(cmbNumeroMission.Text) + "'";
                                     }
                                     cmd.ExecuteNonQuery();
-                                    con.Close();
+                                    deConnecter();
 
                                     if (listeEmployeOrdre.Items.Count > 0)
                                     {
                                         for (int i = 0; i < listeEmployeOrdre.Items.Count; i++)
                                         {
-                                            con.Open();
+                                            connecter();
                                             cmd.CommandText = "select top(1) cin from Personnel where nom='" + listeEmployeOrdre.Items[i].ToString() + "'";
                                             string cin = cmd.ExecuteScalar().ToString();
-                                            con.Close();
+                                            deConnecter();
 
                                             if (IsEmployeExistsInMission(cin, int.Parse(cmbNumeroMission.Text)) == false)
                                             {
-                                                con.Open();
+                                                connecter();
                                                 cmd.Parameters.Clear();
                                                 cmd.CommandText = "insert into DetailMission values('" + int.Parse(cmbNumeroMission.Text) + "',(select top(1) cin from Personnel where nom='" + listeEmployeOrdre.Items[i].ToString() + "'))";
                                                 cmd.ExecuteNonQuery();
-                                                con.Close();
+                                                deConnecter();
                                             }
                                         }
                                     }
 
                                     MessageBox.Show("Modification Avec Succès");
 
-                                    con.Open();
+                                    connecter();
                                     cmd.CommandText = "select NbrJourConsommer from Affaires where Numero='" + cmbNumAffMission.Text + "'";
                                     int nbrJourC = int.Parse(cmd.ExecuteScalar().ToString());
 
@@ -3478,7 +3602,7 @@ namespace GestionAffaire
 
                                     cmd.CommandText = "select NbrJourEstimer from Affaires where Numero='" + cmbNumAffMission.Text + "'";
                                     int nbrJourE = int.Parse(cmd.ExecuteScalar().ToString());
-                                    con.Close();
+                                    deConnecter();
 
                                     if (nbrJourC > nbrJourE)
                                         MessageBox.Show("Nombre de Jours de Mission Dépasse le Nombre de Jours Estimé pour l'affaire", "Note", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -3498,6 +3622,7 @@ namespace GestionAffaire
                             catch (Exception ex)
                             {
                                 MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                deConnecter();
                             }
                         }
                         else
@@ -3540,7 +3665,7 @@ namespace GestionAffaire
                             DataTable dt = new DataTable();
                             dt.Rows.Clear();
 
-                            con.Open();
+                            connecter();
                             cmd.CommandText = "select personnel from DetailMission where mission='" + int.Parse(cmbNumeroMission.Text) + "'";
                             da.SelectCommand = cmd;
                             da.Fill(dt);
@@ -3554,7 +3679,7 @@ namespace GestionAffaire
                             }
                             cmd.CommandText = "delete Mission where numero='" + int.Parse(cmbNumeroMission.Text) + "'";
                             cmd.ExecuteNonQuery();
-                            con.Close();
+                            deConnecter();
 
                             MessageBox.Show("Suppression Avec Succès");
 
@@ -3581,6 +3706,7 @@ namespace GestionAffaire
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                            deConnecter();
                         }
                     }
                 }
@@ -3615,11 +3741,11 @@ namespace GestionAffaire
 
                     try
                     {
-                        con.Open();
+                        connecter();
                         cmd.CommandText = "select * from Mission where numero='" + int.Parse(cmbNumeroMission.Text) + "'";
                         da.SelectCommand = cmd;
                         da.Fill(ds, "Mission");
-                        con.Close();
+                        deConnecter();
 
 
                         CrystalReport3 cr = new CrystalReport3();
@@ -3636,6 +3762,7 @@ namespace GestionAffaire
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        deConnecter();
                     }
                 }
                 else
@@ -3694,7 +3821,7 @@ namespace GestionAffaire
 
             try
             {
-                con.Open();
+                connecter();
                 if (DateTime.Parse(txtDateFinMissionReche.Value.ToString()) >= DateTime.Parse(txtDateDebutMissionReche.Value.ToString()))
                 {
                     if (cmbAffMissionReche.Text != "" && cmbRespoMissionReche.Text != "" && txtLieuDepartMissionReche.Text != "" && txtLieuArriverMissionReche.Text != "")
@@ -3877,7 +4004,7 @@ namespace GestionAffaire
 
                     da.SelectCommand = cmd;
                     da.Fill(dt);
-                    con.Close();
+                    deConnecter();
 
                     if (dt.Rows != null)
                     {
@@ -3900,6 +4027,7 @@ namespace GestionAffaire
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                deConnecter();
             }
         }
         private void button2_Click_2(object sender, EventArgs e)
@@ -3922,39 +4050,46 @@ namespace GestionAffaire
             DataTable dt = new DataTable();
             dt.Rows.Clear();
 
-            con.Open();
-            cmd.CommandText = "select Numero,personne as 'Bénéficiaire',cast(Montant as nvarchar) as 'Montant',compte as 'Compte Bancaire' from MiseDisposition where numero='" + int.Parse(cmbNumeroDisposition.Text) +"'";
-            da.SelectCommand = cmd;
-            da.Fill(dt);
-
-            listDisposition.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            listDisposition.DataSource = dt;
-
-            for (int i = 0; i < dt.Rows.Count; i++)
+            try
             {
-                cmd.Parameters.Clear();
-                cmd.CommandText = "select nom from Personnel where cin='" + dt.Rows[i][1].ToString() + "'";
-                listDisposition.Rows[i].Cells[1].Value = cmd.ExecuteScalar().ToString();
+                connecter();
+                cmd.CommandText = "select Numero,personne as 'Bénéficiaire',cast(Montant as nvarchar) as 'Montant',compte as 'Compte Bancaire' from MiseDisposition where numero='" + int.Parse(cmbNumeroDisposition.Text) + "'";
+                da.SelectCommand = cmd;
+                da.Fill(dt);
+
+                listDisposition.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                listDisposition.DataSource = dt;
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.CommandText = "select nom from Personnel where cin='" + dt.Rows[i][1].ToString() + "'";
+                    listDisposition.Rows[i].Cells[1].Value = cmd.ExecuteScalar().ToString();
+                }
+                deConnecter();
+
+
+                cmbPersonneDisposition.Text = dt.Rows[0][1].ToString();
+                txtMontantDisposition.Text = dt.Rows[0][2].ToString();
+                cmbCompteDisposition.Text = dt.Rows[0][3].ToString();
             }
-            con.Close();
-
-
-            cmbPersonneDisposition.Text = dt.Rows[0][1].ToString();
-            txtMontantDisposition.Text = dt.Rows[0][2].ToString();
-            cmbCompteDisposition.Text = dt.Rows[0][3].ToString();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                deConnecter();
+            }
         }
         private void listDisposition_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            errorProvider1.Dispose();
             try
             {
-                errorProvider1.Dispose();
-
                 if (e.RowIndex >= 0 && e.RowIndex < listDisposition.Rows.Count - 1)
                 {
                     DataTable dt = new DataTable();
                     dt.Rows.Clear();
 
-                    con.Open();
+                    connecter();
                     cmd.CommandText = "select Numero,personne as 'Bénéficiaire',cast(Montant as nvarchar) as 'Montant',compte as 'Compte Bancaire' from MiseDisposition where numero='" + int.Parse(listDisposition.Rows[e.RowIndex].Cells[0].Value.ToString()) + "'";
                     da.SelectCommand = cmd;
                     da.Fill(dt);
@@ -3965,7 +4100,7 @@ namespace GestionAffaire
                         cmd.CommandText = "select nom from Personnel where cin='" + dt.Rows[i][1].ToString() + "'";
                         listDisposition.Rows[i].Cells[1].Value = cmd.ExecuteScalar().ToString();
                     }
-                    con.Close();
+                    deConnecter();
 
                     cmbNumeroDisposition.Text = dt.Rows[0][0].ToString();
                     cmbPersonneDisposition.Text = dt.Rows[0][1].ToString();
@@ -3978,6 +4113,7 @@ namespace GestionAffaire
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                deConnecter();
             }
         }
         private void btnValiderDisposition_Click(object sender, EventArgs e)
@@ -3990,7 +4126,7 @@ namespace GestionAffaire
                 {
                     if (double.Parse(txtMontantDisposition.Text) > 0)
                     {
-                        con.Open();
+                        connecter();
                         cmd.CommandText = "select cin from Personnel where nom='" + cmbPersonneDisposition.Text + "'";
                         string cinP = cmd.ExecuteScalar().ToString();
 
@@ -4003,7 +4139,7 @@ namespace GestionAffaire
 
                         cmd.CommandText = "select IDENT_CURRENT( 'MiseDisposition' )";
                         string num = cmd.ExecuteScalar().ToString();
-                        con.Close();
+                        deConnecter();
 
                         MessageBox.Show("le Numero de Mise à Disposition: " + num, "Ajouter Avec Succès");
 
@@ -4021,10 +4157,12 @@ namespace GestionAffaire
                 {
                     if (ex.Message == "Input string was not in a correct format.")
                         MessageBox.Show("Saisir un Montant Valide", "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    deConnecter();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    deConnecter();
                 }
             }
             else
@@ -4049,7 +4187,7 @@ namespace GestionAffaire
                     {
                         if (double.Parse(txtMontantDisposition.Text) > 0)
                         {
-                            con.Open();
+                            connecter();
                             cmd.CommandText = "select cin from Personnel where nom='" + cmbPersonneDisposition.Text + "'";
                             string cinP = cmd.ExecuteScalar().ToString();
 
@@ -4057,7 +4195,7 @@ namespace GestionAffaire
 
                             cmd.CommandText = "update MiseDisposition set Personne='" + cinP + "',montant='" + double.Parse(txtMontantDisposition.Text) + "',compte='" + cmbCompteDisposition.Text + "' where numero='" + int.Parse(cmbNumeroDisposition.Text) + "'";
                             cmd.ExecuteNonQuery();
-                            con.Close();
+                            deConnecter();
 
                             MessageBox.Show("Modification Avec Succès");
 
@@ -4075,10 +4213,12 @@ namespace GestionAffaire
                     {
                         if (ex.Message == "Input string was not in a correct format.")
                             MessageBox.Show("Saisir un Montant Valide", "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        deConnecter();
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        deConnecter();
                     }
                 }
                 else
@@ -4104,10 +4244,10 @@ namespace GestionAffaire
                 {
                     if (MessageBox.Show("voulez-vous supprimer Mise à Disposition?", "Supprimer Mise à Disposition", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        con.Open();
+                        connecter();
                         cmd.CommandText = "delete MiseDisposition where numero='" + int.Parse(cmbNumeroDisposition.Text) + "'";
                         cmd.ExecuteNonQuery();
-                        con.Close();
+                        deConnecter();
 
                         MessageBox.Show("Suppression Avec Succès");
 
@@ -4122,6 +4262,7 @@ namespace GestionAffaire
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    deConnecter();
                 }
             }
             else
@@ -4148,7 +4289,7 @@ namespace GestionAffaire
 
                 try
                 {
-                    con.Open();
+                    connecter();
                     cmd.CommandText = "select * from MiseDisposition where numero='" + int.Parse(cmbNumeroDisposition.Text) + "'";
                     da.Fill(ds, "MiseDisposition");
 
@@ -4163,7 +4304,7 @@ namespace GestionAffaire
                     cmd.CommandText = "select * from Compte where numero='" + ds.Tables[0].Rows[0][3].ToString() + "'";
                     da.SelectCommand = cmd;
                     da.Fill(ds, "Compte");
-                    con.Close();
+                    deConnecter();
 
 
 
@@ -4183,6 +4324,7 @@ namespace GestionAffaire
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    deConnecter();
                 }
             }
             else
@@ -4201,7 +4343,7 @@ namespace GestionAffaire
             try
             {
                 // ouverture la connection
-                con.Open();
+                connecter();
 
                 cmd.CommandText = "select * from Affaires";
                 da.SelectCommand = cmd;
@@ -4268,7 +4410,7 @@ namespace GestionAffaire
                 da.Fill(ds, "Responsable");
 
                 // fermeture la connection
-                con.Close();
+                deConnecter();
 
 
                 ds.WriteXml("Donnees.xml");
@@ -4276,6 +4418,7 @@ namespace GestionAffaire
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                deConnecter();
             }
         }
 
